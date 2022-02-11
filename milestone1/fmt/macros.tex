@@ -1,0 +1,35 @@
+\newcommand{\st}{\mathrm{s.t.}\ }
+\newcommand{\cppheader}[1]{
+    \begin{tcolorbox}
+        \texttt{\lstinputlisting[language=C]{#1}}
+    \end{tcolorbox}
+}
+
+\newcommand{\cpp}[1]{
+    \begin{tcolorbox}
+        \texttt{\lstinputlisting[language=C++]{#1}}
+    \end{tcolorbox}
+}
+
+\lstset{language=C++,
+                basicstyle=\ttfamily,
+                keywordstyle=\color{blue}\ttfamily,
+                stringstyle=\color{red}\ttfamily,
+                commentstyle=\color{gray}\ttfamily,
+                morecomment=[l][\color{magenta}]{\#}
+}
+\DeclareMathOperator*{\minimize}{minimize}
+
+\newcommand{\VCenter}[1]{
+  % \topskip0pt
+  \vspace*{\fill}
+  #1
+  \vspace*{\fill}
+  %
+}
+
+\renewcommand\qedsymbol{$\blacksquare$}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\include{title.tex}
