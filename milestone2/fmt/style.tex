@@ -1,0 +1,40 @@
+% Title formatting
+\renewcommand{\maketitle} {
+  \VCenter{
+    \begin{center}
+      {\Large\bfseries\thetitle} \\
+
+      \vfill
+      % \textbf{\theauthor} \\
+      \today \\
+      \GroupNumber \\
+      \vfill
+
+      \begin{table}[h]
+      \begin{tabular}{llll}
+      \cline{1-4}
+        \textbf{Name}  & \textbf{Student ID} & 
+        \textbf{CS Alias} & \textbf{Preferred Email Address}    \\
+      \cline{1-4}
+      Steven Li  & 95102885 & i0z2b & listeven39@gmail.com    \\
+      Ethan Lin  & 56009681 & n4h3b & ethan1688.lin@gmail.com \\
+      Anton Chen & 75858795 & y5y2b & antonzychen@gmail.com   \\ \cline{1-4}
+      \end{tabular}
+      \end{table}
+
+      \vfill
+
+      \Location
+      \vfill
+
+      \CourseCode\ \CourseName \\
+      \School \\
+    \end{center}
+  }
+  \thispagestyle{empty}
+  \newpage
+}
+
+\pagenumbering{arabic}
+% \titleformat{\section}{\bfseries\large}{}{0em}{}[]
+% \titleformat{\subsection}{\bfseries}{}{0em}{}[]

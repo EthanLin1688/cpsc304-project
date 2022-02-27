@@ -1,0 +1,122 @@
+\setcounter{section}{1}
+\section{Schema}
+
+With respect to the following schemas,
+attributes which are \underline{underlined} denote primary key attributes,
+and attributes which are \textbf{bolded}  denote foreign key attributes.
+
+\begin{itemize}
+
+  \item Applicant(
+      \underline{ApplicantID}: int, 
+      FirstName: varchar, 
+      LastName: varchar
+    )
+
+  \item Application(
+      CoverLetterLink: varchar, 
+      ResumeLink: varchar,
+      Decision: enum,
+      \underline{\textbf{ApplicantID}}: int,
+      \underline{\textbf{PostingID}}: int,
+      \textbf{RecruiterID} : int,
+      \textbf{CompanyName}: varchar NOT NULL
+    )
+
+  \item Internship(
+      \underline{PostingID} : int,
+      Salary: int,
+      StartDate: date,
+      JobDescription: varchar,
+      CompanyName: varchar
+    )
+
+  \item FullTime(
+      \underline{PostingID} : int,
+      Salary: int,
+      StartDate: date,
+      JobDescription: varchar,
+      Location varchar,
+      \textbf{CompanyName}: varchar NOT NULL
+    )
+
+  \item Recruiter(
+      \underline{RecruiterID} : int,
+      FirstName: varchar,
+      LastName: varchar,
+      \textbf{CompanyName}: varchar NOT NULL
+    )
+
+  \item Company(
+      \underline{CompanyName} : varchar,
+      StreetName: varchar,
+      City: varchar,
+      StateProvince: varchar,
+      Country: varchar,
+      PostalCode: varchar
+    )
+
+  \item Interviewer(
+      \underline{InterviewerID} : int,
+      FirstName: varchar,
+      LastName: varchar,
+      Position: varchar,
+      \textbf{CompanyName}: varchar NOT NULL
+    )
+
+  \item Host(
+      \underline{\textbf{InterviewID}}: int,
+      \underline{\textbf{InterviewerID}}: int
+    )
+
+  \item OnlineAssessment(
+      \underline{InterviewID} : int,
+      PositionType: varchar,
+      Duration: int,
+      Difficulty: varchar,
+      NumberOfQuestions: int,
+      CutoffScore: int,
+      StartDateTime: date,
+      EndDateTime: date,
+      \textbf{ApplicantID}: int,
+      \textbf{PostingID}: int
+    )
+
+  \item PhoneScreen(
+      \underline{InterviewId} : int,
+      StartDateTime: date,
+      EndDateTime: date,
+      \textbf{ApplicantID}: int,
+      \textbf{PostingID}: int
+    )
+
+  \item OnsiteInterview(
+      \underline{InterviewId} : int,
+      StartDateTime: date,
+      EndDateTime: date,
+      \textbf{ApplicantID}: int,
+      \textbf{PostingID}: int
+    )
+    
+  \item TeamMatching(
+      \underline{InterviewId} : int,
+      StartDateTime: date,
+      EndDateTime: date,
+      \textbf{ApplicantID}: int,
+      \textbf{PostingID}: int
+    )
+
+  \item InformationSession(
+      \underline{SessionID:}  int,
+      Location: varchar,
+      Datetime: date,
+      \textbf{CompanyName}: varchar NOT NULL
+    )
+
+  \item Participate(
+      \underline{\textbf{ApplicantID}}: int,
+      \underline{\textbf{PostingID}}  int,
+      \underline{\textbf{SessionID}}: int
+    )
+
+\end{itemize}

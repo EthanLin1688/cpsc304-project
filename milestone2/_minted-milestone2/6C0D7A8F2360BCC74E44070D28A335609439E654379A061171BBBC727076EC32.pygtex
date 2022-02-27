@@ -1,0 +1,193 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{Applicant} \PYG{p}{(}
+  \PYG{n}{ApplicationID}      \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{FirstName}          \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{),}
+  \PYG{n}{LastName}           \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{),}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicationID}\PYG{p}{)}     
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{Application} \PYG{p}{(}
+  \PYG{n}{ApplicationID}      \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{CoverLetterLink}    \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{),}
+  \PYG{n}{ResumeLink}         \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{),}
+  \PYG{n}{Decision}           \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{20}\PYG{p}{),}
+  \PYG{n}{ApplicantID}        \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{PostingID}          \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{RecruiterID}        \PYG{n+nb}{int} \PYG{k}{DEFAULT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{n}{CompanyName}        \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Applicant} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}\PYG{p}{,}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{PostingID}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Posting} \PYG{p}{(}\PYG{n}{PostingID}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}\PYG{p}{,}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{RecruiterID}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Recruiter} \PYG{p}{(}\PYG{n}{RecruiterID}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{SET} \PYG{k}{DEFAULT}\PYG{p}{,}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Company} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{Internship} \PYG{p}{(}
+  \PYG{n}{PostingID}          \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{Salary}             \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{StartDate}          \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{JobDescription}     \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100000}\PYG{p}{),}
+  \PYG{k}{Location}           \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{),}
+  \PYG{n}{CompanyName}        \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{PostingID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Company} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{FullTime} \PYG{p}{(}
+  \PYG{n}{PostingID}          \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{Salary}             \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{StartDate}          \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{JobDescription}     \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100000}\PYG{p}{),}
+  \PYG{k}{Location}           \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{),}
+  \PYG{n}{CompanyName}        \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{PostingID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Company} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{Company} \PYG{p}{(}
+  \PYG{n}{CompanyName}        \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{),}
+  \PYG{n}{StreetName}         \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{),}
+  \PYG{n}{City}               \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{),}
+  \PYG{n}{StateProvince}      \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{),}
+  \PYG{n}{Country}            \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{),}
+  \PYG{n}{PostalCode}         \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{),}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{Interviewer} \PYG{p}{(}
+  \PYG{n}{InterviewerID}      \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{FirstName}          \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{),}
+  \PYG{n}{LastName}           \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{),}
+  \PYG{k}{Position}           \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{),}
+  \PYG{n}{CompanyName}        \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{InterviewerID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Company} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{k}{Host} \PYG{p}{(}
+  \PYG{n}{InterviewID}         \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{InterviewerID}       \PYG{n+nb}{int} \PYG{k}{DEFAULT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{InterviewID}\PYG{p}{,} \PYG{n}{InterviewerID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{InterviewID}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Interview} \PYG{p}{(}\PYG{n}{InterviewID}\PYG{p}{)}
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}\PYG{p}{,}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{InterviewerID}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Interviewer} \PYG{p}{(}\PYG{n}{InterviewerID}\PYG{p}{)}
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{SET} \PYG{k}{DEFAULT}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{OnlineAssessment} \PYG{p}{(}
+  \PYG{n}{InterviewID}        \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{PositionType}       \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{),}
+  \PYG{n}{Duration}           \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{Difficulty}         \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{10}\PYG{p}{),}
+  \PYG{n}{NumberOfQuestions}  \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{CutoffScore}        \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{StartDateTime}      \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{EndDateTime}        \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{ApplicantID}        \PYG{n+nb}{int} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{n}{PostingID}          \PYG{n+nb}{int} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{InterviewID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Application} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{PhoneScreen} \PYG{p}{(}
+  \PYG{n}{InterviewID}        \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{StartDateTime}      \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{EndDateTime}        \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{ApplicantID}        \PYG{n+nb}{int} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{n}{PostingID}          \PYG{n+nb}{int} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{InterviewID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)}
+    \PYG{k}{REFERENCES} \PYG{n}{Application} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)}
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{OnsiteInterview} \PYG{p}{(}
+  \PYG{n}{InterviewID}        \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{StartDateTime}      \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{EndDateTime}        \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{ApplicantID}        \PYG{n+nb}{int} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{n}{PostingID}          \PYG{n+nb}{int} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{InterviewID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)}
+    \PYG{k}{REFERENCES} \PYG{n}{Application} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)}
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{TeamMatching} \PYG{p}{(}
+  \PYG{n}{InterviewID}        \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{StartDateTime}      \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{EndDateTime}        \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{ApplicantID}        \PYG{n+nb}{int} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{n}{PostingID}          \PYG{n+nb}{int} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{InterviewID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)}
+    \PYG{k}{REFERENCES} \PYG{n}{Application} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)}
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{Recruiter} \PYG{p}{(}
+  \PYG{n}{RecruiterID}        \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{FirstName}          \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{),}
+  \PYG{n}{LastName}           \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{50}\PYG{p}{),}
+  \PYG{n}{CompanyName}        \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{RecruiterID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Company} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{Post} \PYG{p}{(}
+  \PYG{n}{ApplicantID}        \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{PostingID}          \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{CompanyName}        \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Application} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{),}
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Company} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{InformationSession} \PYG{p}{(}
+  \PYG{n}{SessionID}            \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{k}{Location}             \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{),}
+  \PYG{n}{DateTime}             \PYG{n+nb}{date}\PYG{p}{,}
+  \PYG{n}{CompanyName}          \PYG{n+nb}{varchar}\PYG{p}{(}\PYG{l+m+mi}{100}\PYG{p}{)} \PYG{k}{NOT} \PYG{k}{NULL}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{SessionID}\PYG{p}{),} 
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{Company} \PYG{p}{(}\PYG{n}{CompanyName}\PYG{p}{)} 
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+
+\PYG{k}{CREATE} \PYG{k}{TABLE} \PYG{n}{Participates} \PYG{p}{(}
+  \PYG{n}{ApplicantID}          \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{PostingID}            \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{n}{SessionID}            \PYG{n+nb}{int}\PYG{p}{,}
+  \PYG{k}{PRIMARY} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{,} \PYG{n}{SessionID}\PYG{p}{),}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)}
+    \PYG{k}{REFERENCES} \PYG{n}{Application} \PYG{p}{(}\PYG{n}{ApplicantID}\PYG{p}{,} \PYG{n}{PostingID}\PYG{p}{)}
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}\PYG{p}{,}
+  \PYG{k}{FOREIGN} \PYG{k}{KEY} \PYG{p}{(}\PYG{n}{SessionID}\PYG{p}{)} 
+    \PYG{k}{REFERENCES} \PYG{n}{InformationSessionHosting}\PYG{p}{(}\PYG{n}{SessionID}\PYG{p}{)}
+      \PYG{k}{ON} \PYG{k}{DELETE} \PYG{k}{CASCADE}
+\PYG{p}{)}
+\end{Verbatim}

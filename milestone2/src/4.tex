@@ -1,0 +1,70 @@
+\section{Functional Dependencies}
+
+\begin{itemize}
+  \item Applicant
+    \begin{itemize}
+      \item ApplicantId $ \to $ FirstName, LastName
+    \end{itemize}
+  \item Application
+    \begin{itemize}
+      \item ApplicantId, PostingId $ \to $ CoverLetterLink, ResumeLink, Decision, RecruiterId
+    \end{itemize}
+  \item Internship
+    \begin{itemize}
+      \item Salary, StartDate $ \to $ JobDescription, Location, CompanyName
+    \end{itemize}
+  \item FullTime
+    \begin{itemize}
+      \item Salary, StartDate $ \to $ JobDescription, Location, CompanyName
+    \end{itemize}
+  \item Recruiter:
+    \begin{itemize}
+      \item RecruiterId $ \to $ FirstName, LastName, CompanyName
+    \end{itemize}
+  \item Company:
+    \begin{itemize}
+      \item CompanyName $ \to $ StreetName, City, StateProvince, Country, PostalCode
+      \item PostalCode, Country $ \to $ City, StateProvince, StreetName
+    \end{itemize}
+  \item Interviewer:
+    \begin{itemize}
+      \item InterviewerID $ \to $ FirstName, LastName, Position, CompanyName
+    \end{itemize}
+  \item Host:
+    \begin{itemize}
+      \item No non-trivial FDs.
+    \end{itemize}
+  \item OnlineAssessment
+    \begin{itemize}
+      \item InterviewId $ \to $ PositionType, Duration, Difficulty, 
+        NumberOfQuestions, CutoffScore, StartDateTime, EndDateTime, ApplicantID, PostingID
+      \item PositionType $ \to $ Duration, Difficulty, NumberOfQuestions, CutoffScore
+    \end{itemize}
+  \item PhoneScreen
+    \begin{itemize}
+      \item InterviewId $ \to $ StartDateTime, EndDateTime
+    \end{itemize}
+  \item OnsiteInterview
+    \begin{itemize}
+      \item InterviewId $ \to $ StartDateTime, EndDateTime
+    \end{itemize}
+  \item TeamMatching
+    \begin{itemize}
+      \item InterviewId $ \to $ StartDateTime, EndDateTime
+    \end{itemize}
+  \item InformationSession
+    \begin{itemize}
+      \item SessionId $ \to $ Location, Datetime, CompanyName
+    \end{itemize}
+  \item Host
+    \begin{itemize}
+      \item SessionID $ \to $ CompanyName
+    \end{itemize}
+  \item Participate
+    \begin{itemize}
+      \item No non-trivial FDs.
+    \end{itemize}
+\end{itemize}
+
+(note: the \texttt{Company} and \texttt{OnlineAssessment} relations include non-trivial primary key dependencies,
+and do not satisfy BCNF.)

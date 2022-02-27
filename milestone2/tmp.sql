@@ -1,0 +1,1 @@
+Applicant(ApplicantID, FirstName, LastName)
