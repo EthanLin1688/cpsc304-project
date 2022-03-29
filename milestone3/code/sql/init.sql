@@ -1,8 +1,8 @@
 CREATE TABLE Applicant (
-  ApplicantID      int,
+  ApplicantID        int,
   FirstName          varchar(50),
   LastName           varchar(50),
-  PRIMARY KEY (ApplicationID)     
+  PRIMARY KEY (ApplicantID)     
 );
 
 CREATE TABLE Application (
