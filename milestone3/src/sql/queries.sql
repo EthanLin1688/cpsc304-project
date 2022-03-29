@@ -33,12 +33,11 @@ WITH InternCount AS (
   SELECT CompanyName, COUNT(*) AS NumInterns
   FROM Application AP, Internship I
   WHERE AP.PostingId = I.PostingID 
-    AND AP.Decision = 'Offer'
+    AND (AP.Decision = 'Offer' OR AP.Decison = 'Accepted')
   GROUP BY AP.CompanyName
 )
 SELECT MAX(IC.NumInterns)
 FROM InternCount IC;
-
 
 -- DIVISION
 -- "Find all the applicants who have applied to every company that offers internships."
