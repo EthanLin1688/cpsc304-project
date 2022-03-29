@@ -23,7 +23,7 @@ UPDATE Applications AP, Applicant A
 SET AP.Decision = 'rejected'
 WHERE A.ApplicantID = AP.ApplicantID 
   AND A.FirstName = :first_name
-  AND A.LastAnme = :last_name
+  AND A.LastName = :last_name
   AND AP.CompanyName = :company_name;
 
 -- SELECTION
