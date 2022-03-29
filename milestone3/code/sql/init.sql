@@ -218,19 +218,17 @@ ALTER TABLE Participates ADD
 -- Populate tables
 
 INSERT ALL
- INTO Applicant VALUES (1, 'Steven', 'Li')
- INTO Applicant VALUES (2, 'Ethan', 'Lin') 
- INTO Applicant VALUES (3, 'Anton', 'Chen') 
- INTO Applicant VALUES (4, 'Raymond', 'Ng')
- INTO Applicant VALUES (5, 'Kanye', 'West')
+INTO Applicant VALUES (1, 'Steven', 'Li')
+INTO Applicant VALUES (2, 'Ethan', 'Lin') 
+INTO Applicant VALUES (3, 'Anton', 'Chen') 
+INTO Applicant VALUES (4, 'Raymond', 'Ng')
+INTO Applicant VALUES (5, 'Kanye', 'West')
+INTO Company VALUES ('Amazon', 'Vine', 'Vancouver', 'BC', 'Canada', 'V2A3A6')
+INTO Company VALUES ('Google', 'Heather', 'Vancouver', 'BC', 'Canada', 'V6H7A6')
+INTO Company VALUES ('Asana' 'Victoria', 'Vancouver', 'BC', 'Canada', 'V2H7U6')
+INTO Company VALUES ('Citadel' 'Queen', 'Vancouver', 'BC', 'Canada', 'V1N4B6')
+INTO Company VALUES ('Rippling' 'Oak', 'Vancouver', 'BC', 'Canada', 'V7A5A6')
 SELECT 1 FROM DUAL;
-
-INSERT INTO Company VALUES 
-( 'Amazon', 'Vine', 'Vancouver', 'BC', 'Canada', 'V2A3A6'), 
-( 'Google', 'Heather', 'Vancouver', 'BC', 'Canada', 'V6H7A6'), 
-( 'Asana' 'Victoria', 'Vancouver', 'BC', 'Canada', 'V2H7U6'), 
-( 'Citadel' 'Queen', 'Vancouver', 'BC', 'Canada', 'V1N4B6'), 
-( 'Rippling' 'Oak', 'Vancouver', 'BC', 'Canada', 'V7A5A6');
 
 INSERT INTO Internship VALUES 
 ( 1, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Asana'), 
