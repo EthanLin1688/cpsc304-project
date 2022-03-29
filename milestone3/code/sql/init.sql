@@ -14,19 +14,7 @@ CREATE TABLE Application (
   PostingID          int,
   RecruiterID        int DEFAULT NULL,
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (ApplicantID, PostingID),
-  FOREIGN KEY (ApplicantID) 
-    REFERENCES Applicant (ApplicantID) 
-      ON DELETE CASCADE,
-  FOREIGN KEY (PostingID) 
-    REFERENCES Posting (PostingID) 
-      ON DELETE CASCADE,
-  FOREIGN KEY (RecruiterID) 
-    REFERENCES Recruiter (RecruiterID) 
-      ON DELETE SET NULL,
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
+  PRIMARY KEY (ApplicantID, PostingID)
 );
 
 CREATE TABLE Internship (
@@ -36,10 +24,7 @@ CREATE TABLE Internship (
   JobDescription     varchar(1000),
   Location           varchar(100),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (PostingID),
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
+  PRIMARY KEY (PostingID)
 );
 
 CREATE TABLE FullTime (
@@ -49,10 +34,7 @@ CREATE TABLE FullTime (
   JobDescription     varchar(1000),
   Location           varchar(100),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (PostingID),
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
+  PRIMARY KEY (PostingID)
 );
 
 CREATE TABLE Company (
@@ -71,22 +53,13 @@ CREATE TABLE Interviewer (
   LastName           varchar(50),
   Position           varchar(50),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (InterviewerID),
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
+  PRIMARY KEY (InterviewerID)
 );
 
 CREATE TABLE Host (
   InterviewID         int,
   InterviewerID       int DEFAULT NULL,
-  PRIMARY KEY (InterviewID, InterviewerID),
-  FOREIGN KEY (InterviewID) 
-    REFERENCES Interview (InterviewID)
-      ON DELETE CASCADE,
-  FOREIGN KEY (InterviewerID) 
-    REFERENCES Interviewer (InterviewerID)
-      ON DELETE SET DEFAULT
+  PRIMARY KEY (InterviewID, InterviewerID)
 );
 
 CREATE TABLE OnlineAssessment (
@@ -100,10 +73,7 @@ CREATE TABLE OnlineAssessment (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID),
-  FOREIGN KEY (ApplicantID, PostingID) 
-    REFERENCES Application (ApplicantID, PostingID) 
-      ON DELETE CASCADE
+  PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE PhoneScreen (
@@ -112,10 +82,7 @@ CREATE TABLE PhoneScreen (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID),
-  FOREIGN KEY (ApplicantID, PostingID)
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE
+  PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE OnsiteInterview (
@@ -124,10 +91,7 @@ CREATE TABLE OnsiteInterview (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID),
-  FOREIGN KEY (ApplicantID, PostingID)
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE
+  PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE TeamMatching (
@@ -136,10 +100,7 @@ CREATE TABLE TeamMatching (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID),
-  FOREIGN KEY (ApplicantID, PostingID)
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE
+  PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE Recruiter (
@@ -147,48 +108,114 @@ CREATE TABLE Recruiter (
   FirstName          varchar(50),
   LastName           varchar(50),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (RecruiterID),
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
+  PRIMARY KEY (RecruiterID)
 );
 
 CREATE TABLE Post (
   ApplicantID        int,
   PostingID          int,
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (ApplicantID, PostingID),
+  PRIMARY KEY (ApplicantID, PostingID)
+);
+
+CREATE TABLE InformationSession (
+  SessionID          int,
+  Location           varchar(100),
+  DateTime           date,
+  CompanyName        varchar(100) NOT NULL,
+  PRIMARY KEY (SessionID)
+);
+
+CREATE TABLE Participates (
+  ApplicantID        int,
+  PostingID          int,
+  SessionID          int,
+  PRIMARY KEY (ApplicantID, PostingID, SessionID)
+);
+
+ALTER TABLE Application ADD
+  FOREIGN KEY (ApplicantID) 
+    REFERENCES Applicant (ApplicantID) 
+      ON DELETE CASCADE,
+  FOREIGN KEY (PostingID) 
+    REFERENCES Posting (PostingID) 
+      ON DELETE CASCADE,
+  FOREIGN KEY (RecruiterID) 
+    REFERENCES Recruiter (RecruiterID) 
+      ON DELETE SET NULL,
+  FOREIGN KEY (CompanyName) 
+    REFERENCES Company (CompanyName) 
+      ON DELETE CASCADE;
+
+ALTER TABLE Internship ADD
+  FOREIGN KEY (CompanyName) 
+    REFERENCES Company (CompanyName) 
+      ON DELETE CASCADE;
+
+ALTER TABLE FullTime ADD
+  FOREIGN KEY (CompanyName) 
+    REFERENCES Company (CompanyName) 
+      ON DELETE CASCADE;
+
+ALTER TABLE Interviewer ADD
+  FOREIGN KEY (CompanyName) 
+    REFERENCES Company (CompanyName) 
+      ON DELETE CASCADE;
+
+ALTER TABLE Host ADD
+  FOREIGN KEY (InterviewID) 
+    REFERENCES Interview (InterviewID)
+      ON DELETE CASCADE,
+  FOREIGN KEY (InterviewerID) 
+    REFERENCES Interviewer (InterviewerID)
+      ON DELETE SET DEFAULT;
+
+ALTER TABLE OnlineAssessment ADD
+  FOREIGN KEY (ApplicantID, PostingID) 
+    REFERENCES Application (ApplicantID, PostingID) 
+      ON DELETE CASCADE;
+
+
+ALTER TABLE PhoneScreen ADD
+  FOREIGN KEY (ApplicantID, PostingID)
+    REFERENCES Application (ApplicantID, PostingID)
+      ON DELETE CASCADE;
+
+ALTER TABLE OnsiteInterview ADD
+  FOREIGN KEY (ApplicantID, PostingID)
+    REFERENCES Application (ApplicantID, PostingID)
+      ON DELETE CASCADE;
+
+ALTER TABLE TeamMatching ADD
+  FOREIGN KEY (ApplicantID, PostingID)
+    REFERENCES Application (ApplicantID, PostingID)
+      ON DELETE CASCADE;
+
+ALTER TABLE Recruiter ADD
+  FOREIGN KEY (CompanyName) 
+    REFERENCES Company (CompanyName) 
+      ON DELETE CASCADE;
+
+ALTER TABLE Recruiter ADD
   FOREIGN KEY (ApplicantID, PostingID) 
     REFERENCES Application (ApplicantID, PostingID),
       ON DELETE CASCADE
   FOREIGN KEY (CompanyName) 
     REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
-);
+      ON DELETE CASCADE;
 
-CREATE TABLE InformationSession (
-  SessionID            int,
-  Location             varchar(100),
-  DateTime             date,
-  CompanyName          varchar(100) NOT NULL,
-  PRIMARY KEY (SessionID), 
+ALTER TABLE InformationSession ADD
   FOREIGN KEY (CompanyName) 
     REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
-);
+      ON DELETE CASCADE;
 
-CREATE TABLE Participates (
-  ApplicantID          int,
-  PostingID            int,
-  SessionID            int,
-  PRIMARY KEY (ApplicantID, PostingID, SessionID),
+ALTER TABLE Participates ADD
   FOREIGN KEY (ApplicantID, PostingID)
     REFERENCES Application (ApplicantID, PostingID)
       ON DELETE CASCADE,
   FOREIGN KEY (SessionID) 
     REFERENCES InformationSessionHosting(SessionID)
-      ON DELETE CASCADE
-);
+      ON DELETE CASCADE;
 
 INSERT INTO Applicant VALUES(95102885, 'Steven', 'Li');
 INSERT INTO Applicant VALUES(56009681, 'Ethan', 'Lin');
