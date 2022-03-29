@@ -46,7 +46,7 @@ WHERE A.ApplicantID = AP.ApplicationID
   AND I.Location LIKE :location;
 
 -- AGGREGATION
--- "Find the number of recruiters for each company"
+-- "Find the number of recruiters for each company."
 SELECT R.CompanyName, COUNT(*)
 FROM Recruiter R
 GROUP BY R.CompanyName;

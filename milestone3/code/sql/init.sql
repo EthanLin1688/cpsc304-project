@@ -200,17 +200,17 @@ INSERT INTO Application VALUES('stevenli.com/coverletter.pdf', 'stevenli.com/res
 INSERT INTO Application VALUES('ethanlin.com/coverletter.pdf', 'ethanlin.com/resume.pdf', 'Accepted', 56009681, 10000001, 30000001, 'Google');
 INSERT INTO Application VALUES('antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 75858795, 10000002, 30000002, 'Amazon');
 
-INSERT INTO Internship VALUES(1000, 10, '10/22/2022', 'janitor', 'company bathroom', 'Happy Land');
-INSERT INTO Internship VALUES(1001, 50, '5/1/2022', 'secretary', 'office', 'Google');
-INSERT INTO Internship VALUES(1002, 100, '12/4/2022', 'sales', 'office', 'Housekeeper');
-INSERT INTO Internship VALUES(1003, 500, '10/30/2022', 'worker', 'warehouse', 'Amazon');
-INSERT INTO Internship VALUES(1004, 30, '2/28/2023', 'sorting documents', 'office', 'Google');
+INSERT INTO Internship VALUES(1000, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Happy Land');
+INSERT INTO Internship VALUES(1001, 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google');
+INSERT INTO Internship VALUES(1002, 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Housekeeper');
+INSERT INTO Internship VALUES(1003, 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon');
+INSERT INTO Internship VALUES(1004, 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google');
 
-INSERT INTO FullTime VALUES(1005, 10, '10/22/2022', 'janitor', 'company bathroom', 'Happy Land');
-INSERT INTO FullTime VALUES(1006, 50, '5/1/2022', 'secretary', 'office', 'Google');
-INSERT INTO FullTime VALUES(1007, 100, '12/4/2022', 'sales', 'office', 'Housekeeper');
-INSERT INTO FullTime VALUES(1008, 500, '10/30/2022', 'worker', 'warehouse', 'Amazon');
-INSERT INTO FullTime VALUES(1009, 30, '2/28/2023', 'sorting documents', 'office', 'Google');
+INSERT INTO FullTime VALUES(1005, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Happy Land');
+INSERT INTO FullTime VALUES(1006, 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google');
+INSERT INTO FullTime VALUES(1007, 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Housekeeper');
+INSERT INTO FullTime VALUES(1008, 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon');
+INSERT INTO FullTime VALUES(1009, 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google');
 
 INSERT INTO Recruiter VALUES(7800776, 'Steven', 'Li', 'Amazon');
 INSERT INTO Recruiter VALUES(4352343, 'Ethan', 'Lin', 'Amazon');
@@ -242,9 +242,9 @@ INSERT INTO OnlineAssessment1 VALUES('Intern', 1, 'Easy', 100, 50);
 INSERT INTO OnlineAssessment1 VALUES('FullTime', 6, 'Hard', 60, 70);
 INSERT INTO OnlineAssessment1 VALUES('Intern', 12, 'Medium', 90, 30);
 
-INSERT INTO OnlineAssessment2 VALUES(7800776, 586785947, 'FullTime', '5/1/2022', '10/30/2022', 762134827, 73648712);
-INSERT INTO OnlineAssessment2 VALUES(4352343, 928143721, 'FullTime', '12/4/2022', '3/5/2023', 824637129, 271863427);
-INSERT INTO OnlineAssessment2 VALUES(4365645, 983473298, 'Intern', '10/22/2022', '12/30/2022', 21984721987, 3984979128);
+INSERT INTO OnlineAssessment2 VALUES(7800776, 586785947, 'FullTime', TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 762134827, 73648712);
+INSERT INTO OnlineAssessment2 VALUES(4352343, 928143721, 'FullTime', TO_DATE('12/4/2022', 'DD/MM/YYYY'), TO_DATE('3/5/2023', 'DD/MM/YYYY'), 824637129, 271863427);
+INSERT INTO OnlineAssessment2 VALUES(4365645, 983473298, 'Intern', TO_DATE('10/22/2022', 'DD/MM/YYYY'), TO_DATE('12/30/2022', 'DD/MM/YYYY'), 21984721987, 3984979128);
 INSERT INTO OnlineAssessment2 VALUES(4537451, 921837921, 'FullTime', '2/28/2023', '2/28/2024', 29387210, 2198347219);
 INSERT INTO OnlineAssessment2 VALUES(4532421, 872463872, 'Intern', '10/30/2022', '10/30/2022', 29837219, 129783378);
 
