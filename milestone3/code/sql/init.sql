@@ -218,11 +218,11 @@ ALTER TABLE Participates ADD
 -- Populate tables
 
 INSERT ALL
- INTO Applicant VALUES ( 1, 'Steven', 'Li'), 
- INTO Applicant VALUES ( 2, 'Ethan', 'Lin'), 
- INTO Applicant VALUES ( 3, 'Anton', 'Chen'), 
- INTO Applicant VALUES ( 4, 'Raymond', 'Ng'), 
- INTO Applicant VALUES ( 5, 'Kanye', 'West');
+ INTO Applicant VALUES (1, 'Steven', 'Li')
+ INTO Applicant VALUES (2, 'Ethan', 'Lin') 
+ INTO Applicant VALUES (3, 'Anton', 'Chen') 
+ INTO Applicant VALUES (4, 'Raymond', 'Ng')
+ INTO Applicant VALUES (5, 'Kanye', 'West')
 SELECT 1 FROM DUAL;
 
 INSERT INTO Company VALUES 
