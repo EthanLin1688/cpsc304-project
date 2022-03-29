@@ -1,5 +1,5 @@
 -- INSERT
--- "Insert a new job internship job posting"
+-- "Insert a new job internship job posting."
 INSERT 
 INTO Internship 
 VALUES (
@@ -27,7 +27,7 @@ WHERE A.ApplicantID = AP.ApplicantID
   AND AP.CompanyName = :company_name;
 
 -- SELECTION
--- "Find all the information sessions at specified location"
+-- "Find all the information sessions at specified location."
 SELECT *
 FROM InformationSession I
 WHERE I.Location IS :location;
