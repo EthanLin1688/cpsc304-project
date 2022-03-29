@@ -224,11 +224,11 @@ INSERT INTO Company VALUES('Happy', 'Queen', 'Vancouver', 'BC', 'Canada', 'V1N4B
 INSERT INTO Company VALUES('Housekeeper', 'Oak', 'Vancouver', 'BC', 'Canada', 'V7A5A6');
 INSERT INTO Company VALUES('Asana', 'Victoria', 'Vancouver', 'BC', 'Canada', 'V2H7U6');
 
-INSERT INTO Interviewer VALUES(7800776, 'Steven', 'Li', 'Amazon');
-INSERT INTO Interviewer VALUES(4352343, 'Ethan', 'Lin', 'Amazon');
-INSERT INTO Interviewer VALUES(4365645, 'Anton', 'Chen', 'Happy Land');
-INSERT INTO Interviewer VALUES(4537451, 'Raymond', 'Ng', 'Housekeeper');
-INSERT INTO Interviewer VALUES(1232433, 'Kanye', 'West', 'Google');
+INSERT INTO Interviewer VALUES(7800776, 'Steven', 'Li', 'Senior Engineer', 'Amazon');
+INSERT INTO Interviewer VALUES(4352343, 'Ethan', 'Lin', 'Junior Engineer', 'Amazon');
+INSERT INTO Interviewer VALUES(4365645, 'Anton', 'Chen', 'Junior Engineer', 'Happy Land');
+INSERT INTO Interviewer VALUES(4537451, 'Raymond', 'Ng', 'Project Manager', 'Housekeeper');
+INSERT INTO Interviewer VALUES(1232433, 'Kanye', 'West', 'Principal Engineer', 'Google');
 
 INSERT INTO Host VALUES(7800776, 586785947);
 INSERT INTO Host VALUES(4352343, 928143721);
