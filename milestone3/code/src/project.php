@@ -22,47 +22,87 @@
     </head>
 
     <body>
-        <h2>Reset</h2>
-        <p>If you wish to reset the table press on the reset button. If this is the first time you're running this 
-        page, you MUST use reset</p>
+        <h1> CPSC 304 Job Board Database Demo </h1>
 
-        <form method="POST" action="oracle-test.php">
-            <!-- if you want another page to load after the button is clicked, you have to specify that page in 
-            the action parameter -->
-            <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
-            <p><input type="submit" value="Reset" name="reset"></p>
-        </form>
-
-        <hr />
-
-        <h2>Insert Values into DemoTable</h2>
-        <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
+        <h2>Insertion</h2>
+        <p>Insert a new job internship job posting</p>
+        <form method="POST" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-            Number: <input type="text" name="insNo"> <br /><br />
-            Name: <input type="text" name="insName"> <br /><br />
-
+            Posting ID: <input type="text" name="postingID"> <br /><br />
+            Salary: <input type="text" name="salary"> <br /><br />
+            Start Date (dd-mm-yy): <input type="text" name="startDate"> <br /><br />
+            Job Description: <input type="text" name="jobDescription"> <br /><br />
+            Location : <input type="text" name="location"> <br /><br />
+            Company Name: <input type="text" name="companyName"> <br /><br />
             <input type="submit" value="Insert" name="insertSubmit"></p>
         </form>
-
         <hr />
 
-        <h2>Update Name in DemoTable</h2>
-        <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
+        <h2>Deletion</h2>
+        <p> Remove a company from the database </p>
+        <form method="POST" action="project.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
+            Company Name: <input type="text" name="companyName"> <br /><br />
+            <input type="submit" value="Delete" name="deleteSubmit"></p>
+        </form>
+        <hr />
 
-        <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
+        <h2>Update</h2>
+        <p>Reject an applicant from all applied positions at a company</p>
+        <form method="POST" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-            Old Name: <input type="text" name="oldName"> <br /><br />
-            New Name: <input type="text" name="newName"> <br /><br />
-
+            First Name: <input type="text" name="firstName"> <br /><br />
+            Last Name: <input type="text" name="lastName"> <br /><br />
+            Company Name: <input type="text" name="companyName"> <br /><br />
             <input type="submit" value="Update" name="updateSubmit"></p>
         </form>
-
         <hr />
 
-        <h2>Count the Tuples in DemoTable</h2>
-        <form method="GET" action="oracle-test.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="countTupleRequest" name="countTupleRequest">
-            <input type="submit" name="countTuples"></p>
+        <h2>Selection Query</h2>
+        <p>Find all the information sessions at specified location </p>
+        <form method="GET" action="project.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="selectionQueryRequest" name="selectionQueryRequest">
+            Location: <input type="text" name="location"> <br /><br />
+            <input type="submit" name="selectSubmit"></p>
+        </form>
+        <hr />
+
+        <h2>Projection Query</h2>
+        <p>Find the names of all the companies which have internships availible</p>
+        <form method="GET" action="project.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="projectionQueryRequest" name="projectionQueryRequest">
+            <input type="submit" name="projectionSubmit"></p>
+        </form>
+        <hr />
+
+        <h2>Join Applicant, Application, Internship Tables</h2>
+        <p>Select all applicants who have been offered a position in a given Location</p>
+        <form method="GET" action="project.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="joinQueryRequest" name="joinQueryRequest">
+            Location: <input type="text" name="values"> <br /><br />
+            <input type="submit" name="joinSubmit"></p>
+        </form>
+        <hr />
+
+        <h2>Aggregation with Count</h2>
+        <p>Find the number of recruiters for each company</p>
+        <form method="GET" action="project.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="aggregationCountRequest" name="aggregationCountRequest">
+            <input type="submit" name="aggregationCountSubmit"></p>
+        </form>
+
+        <h2>Nested Aggregation with Group By</h2>
+        <p>Find the company who has accepted the most interns.</p>
+        <form method="GET" action="project.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="nestedAggregationRequest" name="nestedAggregationRequest">
+            <input type="submit" name="nestedAggregationSubmit"></p>
+        </form>
+
+        <h2>Division</h2>
+        <p>Find all the applicants who have applied to every company that offers internships</p>
+        <form method="GET" action="project.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="divisionQueryRequest" name="divisionQueryRequest">
+            <input type="submit" name="divisionSubmit"></p>
         </form>
 
         <?php
@@ -188,17 +228,6 @@
             OCICommit($db_conn);
         }
 
-        function handleResetRequest() {
-            global $db_conn;
-            // Drop old table
-            executePlainSQL("DROP TABLE demoTable");
-
-            // Create new table
-            echo "<br> creating new table <br>";
-            executePlainSQL("CREATE TABLE demoTable (id int PRIMARY KEY, name char(30))");
-            OCICommit($db_conn);
-        }
-
         function handleInsertRequest() {
             global $db_conn;
 
@@ -216,22 +245,12 @@
             OCICommit($db_conn);
         }
 
-        function handleCountRequest() {
-            global $db_conn;
-
-            $result = executePlainSQL("SELECT Count(*) FROM demoTable");
-
-            if (($row = oci_fetch_row($result)) != false) {
-                echo "<br> The number of tuples in demoTable: " . $row[0] . "<br>";
-            }
-        }
-
         // HANDLE ALL POST ROUTES
 	    // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
         function handlePOSTRequest() {
             if (connectToDB()) {
-                if (array_key_exists('resetTablesRequest', $_POST)) {
-                    handleResetRequest();
+                if (array_key_exists('deleteQueryRequest', $_POST)) {
+                    handleDeleteRequest();
                 } else if (array_key_exists('updateQueryRequest', $_POST)) {
                     handleUpdateRequest();
                 } else if (array_key_exists('insertQueryRequest', $_POST)) {
@@ -246,19 +265,40 @@
         // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
         function handleGETRequest() {
             if (connectToDB()) {
-                if (array_key_exists('countTuples', $_GET)) {
-                    handleCountRequest();
+                if (array_key_exists('selectionSubmit', $_GET)) {
+                    handleSelectionRequest();
+                } else if (array_key_exists('projectionSubmit', $_GET)) {
+                    handleProjectionRequest();
+                } else if (array_key_exists('joinSubmit', $_GET)) {
+                    handleJoinRequest();
+                } else if (array_key_exists('aggregationCountSubmit', $_GET)) {
+                    handleAggregationCountRequest();
+                } else if (array_key_exists('nestedAggregationSubmit', $_GET)) {
+                    handleNestedAggregationSubmitRequest();
+                } else if (array_key_exists('divisionSubmit', $_GET)) {
+                    handleDivisionRequest();
                 }
 
                 disconnectFromDB();
             }
         }
 
-		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
+		if (isset($_POST['deleteSubmit']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
             handlePOSTRequest();
-        } else if (isset($_GET['countTupleRequest'])) {
+        } else if (isset($_GET['selectQueryRequest'])) {
+            handleGETRequest();
+        } else if (isset($_GET['projectionQueryRequest'])) {
+            handleGETRequest();
+        } else if (isset($_GET['joinQueryRequest'])) {
+            handleGETRequest();
+        } else if (isset($_GET['aggregationCountRequest'])) {
+            handleGETRequest();
+        } else if (isset($_GET['nestedAggregationRequest'])) {
+            handleGETRequest();
+        } else if (isset($_GET['divisionQueryRequest'])) {
             handleGETRequest();
         }
+        
 		?>
 	</body>
 </html>
