@@ -38,7 +38,7 @@ SELECT I.CompanyName
 FROM Internship I;
 
 -- JOIN QUERY
--- "Select all applicants who have been offered an internship position in a given city."
+-- "Select all applicants who have been offered an internship position in a given location."
 SELECT A.FirstName, A.LastName
 FROM Applicant A, Application AP, Internship I
 WHERE A.ApplicantID = AP.ApplicationID 
