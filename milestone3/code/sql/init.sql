@@ -23,7 +23,7 @@ CREATE TABLE Application (
       ON DELETE CASCADE,
   FOREIGN KEY (RecruiterID) 
     REFERENCES Recruiter (RecruiterID) 
-      ON DELETE SET DEFAULT,
+      ON DELETE SET NULL,
   FOREIGN KEY (CompanyName) 
     REFERENCES Company (CompanyName) 
       ON DELETE CASCADE
