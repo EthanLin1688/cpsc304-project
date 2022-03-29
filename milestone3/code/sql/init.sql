@@ -1,6 +1,18 @@
 -- Create table statements
 
-DROP TABLE
+DROP TABLE IF EXISTS Applicant;
+DROP TABLE IF EXISTS Application;
+DROP TABLE IF EXISTS Posting;
+DROP TABLE IF EXISTS Company;
+DROP TABLE IF EXISTS Interviewer;
+DROP TABLE IF EXISTS Host;
+DROP TABLE IF EXISTS OnlineAssessment;
+DROP TABLE IF EXISTS PhoneScreen;
+DROP TABLE IF EXISTS OnsiteInterview;
+DROP TABLE IF EXISTS TeamMatching;
+DROP TABLE IF EXISTS Recruiter;
+DROP TABLE IF EXISTS InformationSession;
+DROP TABLE IF EXISTS Participates;
 
 CREATE TABLE Applicant (
   ApplicantID        int,
@@ -123,95 +135,105 @@ CREATE TABLE Participates (
 
 -- Add foreign keys
 
-ALTER TABLE Application 
-  ADD CONSTRAINT application_fk_applicant
+ALTER TABLE Application ADD (
+  CONSTRAINT application_fk_applicant
     FOREIGN KEY (ApplicantID) 
       REFERENCES Applicant (ApplicantID) 
         ON DELETE CASCADE,
-  ADD CONSTRAINT application_fk_posting
+  CONSTRAINT application_fk_posting
     FOREIGN KEY (PostingID) 
       REFERENCES Posting (PostingID) 
         ON DELETE CASCADE,
-  ADD CONSTRAINT application_fk_recruiter
+  CONSTRAINT application_fk_recruiter
     FOREIGN KEY (RecruiterID) 
       REFERENCES Recruiter (RecruiterID) 
         ON DELETE SET NULL,
-  ADD CONSTRAINT application_fk_company
+  CONSTRAINT application_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE
+);
+
+ALTER TABLE Posting ADD (
+  CONSTRAINT posting_fk_company
     FOREIGN KEY (CompanyName) 
       REFERENCES Company (CompanyName) 
         ON DELETE CASCADE;
+)
 
-ALTER TABLE Posting
-  ADD CONSTRAINT posting_fk_company
+ALTER TABLE Interviewer ADD (
+  CONSTRAINT interviewer_fk_company
     FOREIGN KEY (CompanyName) 
       REFERENCES Company (CompanyName) 
-        ON DELETE CASCADE;
+        ON DELETE CASCADE
+);
 
-ALTER TABLE Interviewer 
-  ADD CONSTRAINT interviewer_fk_company
-    FOREIGN KEY (CompanyName) 
-      REFERENCES Company (CompanyName) 
-        ON DELETE CASCADE;
-
-ALTER TABLE Host 
-  ADD CONSTRAINT host_fk_interview
+ALTER TABLE Host ADD (
+  CONSTRAINT host_fk_interview
     FOREIGN KEY (InterviewID) 
       REFERENCES Interview (InterviewID)
         ON DELETE CASCADE,
-  ADD CONSTRAINT host_fk_interviewer
+  CONSTRAINT host_fk_interviewer
     FOREIGN KEY (InterviewerID) 
       REFERENCES Interviewer (InterviewerID)
-        ON DELETE SET DEFAULT;
+        ON DELETE SET DEFAULT
+);
 
-ALTER TABLE OnlineAssessment 
-  ADD CONSTRAINT online_assessment_fk_application
+ALTER TABLE OnlineAssessment ADD (
+  CONSTRAINT online_assessment_fk_application 
     FOREIGN KEY (ApplicantID, PostingID) 
       REFERENCES Application (ApplicantID, PostingID) 
-        ON DELETE CASCADE;
+        ON DELETE CASCADE
+);
 
-
-ALTER TABLE PhoneScreen
-  ADD CONSTRAINT phone_screen_fk_application
+ALTER TABLE PhoneScreen ADD (
+  CONSTRAINT phone_screen_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES Application (ApplicantID, PostingID)
-        ON DELETE CASCADE;
+        ON DELETE CASCADE
+);
 
-ALTER TABLE OnsiteInterview
-  ADD CONSTRAINT onsite_interview_fk_application
+ALTER TABLE OnsiteInterview ADD (
+  CONSTRAINT onsite_interview_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES Application (ApplicantID, PostingID)
-        ON DELETE CASCADE;
+        ON DELETE CASCADE
+);
 
-ALTER TABLE TeamMatching
-  ADD CONSTRAINT team_matching_fk_application
+ALTER TABLE TeamMatching ADD (
+  CONSTRAINT team_matching_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES Application (ApplicantID, PostingID)
-        ON DELETE CASCADE;
+        ON DELETE CASCADE
+);
 
-ALTER TABLE Recruiter
-  ADD CONSTRAINT recruiter_fk_company
+ALTER TABLE Recruiter ADD (
+  CONSTRAINT recruiter_fk_company
     FOREIGN KEY (CompanyName) 
       REFERENCES Company (CompanyName) 
-        ON DELETE CASCADE;
+        ON DELETE CASCADE
+);
 
-ALTER TABLE InformationSession ADD
-  ADD CONSTRAINT information_session_fk_company
+ALTER TABLE InformationSession ADD (
+  CONSTRAINT information_session_fk_company
     FOREIGN KEY (CompanyName) 
       REFERENCES Company (CompanyName) 
-        ON DELETE CASCADE;
+        ON DELETE CASCADE
+);
 
-ALTER TABLE Participates ADD
-  ADD CONSTRAINT participates_fk_application
+
+ALTER TABLE Participates ADD (
+  CONSTRAINT participates_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES Application (ApplicantID, PostingID)
         ON DELETE CASCADE,
-  ADD CONSTRAINT participates_fk_information_session
+  CONSTRAINT participates_fk_information_session
     FOREIGN KEY (SessionID) 
       REFERENCES InformationSession(SessionID)
-        ON DELETE CASCADE;
+        ON DELETE CASCADE
+);
 
 -- Populate tables
-
 INSERT ALL
 INTO Applicant VALUES (1, 'Steven', 'Li')
 INTO Applicant VALUES (2, 'Ethan', 'Lin') 
@@ -222,7 +244,7 @@ INTO Company VALUES ('Amazon', 'Vine', 'Vancouver', 'BC', 'Canada', 'V2A3A6')
 INTO Company VALUES ('Google', 'Heather', 'Vancouver', 'BC', 'Canada', 'V6H7A6')
 INTO Company VALUES ('Asana', 'Victoria', 'Vancouver', 'BC', 'Canada', 'V2H7U6')
 INTO Company VALUES ('Citadel', 'Queen', 'Vancouver', 'BC', 'Canada', 'V1N4B6')
-INTO Company VALUES ('Rippling' 'Oak', 'Vancouver', 'BC', 'Canada', 'V7A5A6')
+INTO Company VALUES ('Rippling', 'Oak', 'Vancouver', 'BC', 'Canada', 'V7A5A6')
 INTO Posting VALUES (1, 'Internship', 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Asana')
 INTO Posting VALUES (2, 'Internship', 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google')
 INTO Posting VALUES (3, 'FullTime', 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Amazon')
