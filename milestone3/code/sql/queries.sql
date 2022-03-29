@@ -38,16 +38,12 @@ SELECT I.CompanyName
 FROM Internship I;
 
 -- JOIN QUERY
--- "Select all applicants who have been offered a position in a given city."
+-- "Select all applicants who have been offered an internship position in a given city."
 SELECT A.FirstName, A.LastName
-FROM Applicant A, Application AP, Internship I, FullTime FT
-WHERE A.ApplicantID = AP.ApplicationID AND (
-    AP.PostingID = I.PostingID
-    AND I.Location LIKE :location
-  ) OR (
-    AP.PostingID = FT.PostingID
-    AND I.Location LIKE :location
-);
+FROM Applicant A, Application AP, Internship I
+WHERE A.ApplicantID = AP.ApplicationID 
+  AND AP.PostingID = I.PostingID
+  AND I.Location LIKE :location;
 
 -- AGGREGATION
 -- "Find the number of recruiters for each company"
