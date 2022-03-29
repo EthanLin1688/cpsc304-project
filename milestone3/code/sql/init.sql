@@ -1,3 +1,5 @@
+-- Create table statements
+
 CREATE TABLE Applicant (
   ApplicantID        int,
   FirstName          varchar(50),
@@ -111,13 +113,6 @@ CREATE TABLE Recruiter (
   PRIMARY KEY (RecruiterID)
 );
 
-CREATE TABLE Post (
-  ApplicantID        int,
-  PostingID          int,
-  CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (ApplicantID, PostingID)
-);
-
 CREATE TABLE InformationSession (
   SessionID          int,
   Location           varchar(100),
@@ -132,6 +127,8 @@ CREATE TABLE Participates (
   SessionID          int,
   PRIMARY KEY (ApplicantID, PostingID, SessionID)
 );
+
+-- Add foreign keys
 
 ALTER TABLE Application ADD
   FOREIGN KEY (ApplicantID) 
@@ -198,7 +195,7 @@ ALTER TABLE Recruiter ADD
 
 ALTER TABLE Recruiter ADD
   FOREIGN KEY (ApplicantID, PostingID) 
-    REFERENCES Application (ApplicantID, PostingID),
+    REFERENCES Application (ApplicantID, PostingID)
       ON DELETE CASCADE
   FOREIGN KEY (CompanyName) 
     REFERENCES Company (CompanyName) 
@@ -217,90 +214,103 @@ ALTER TABLE Participates ADD
     REFERENCES InformationSessionHosting(SessionID)
       ON DELETE CASCADE;
 
-INSERT INTO Applicant VALUES(95102885, 'Steven', 'Li');
-INSERT INTO Applicant VALUES(56009681, 'Ethan', 'Lin');
-INSERT INTO Applicant VALUES(75758795, 'Anton', 'Chen');
-INSERT INTO Applicant VALUES(10000000, 'Raymond', 'Ng');
-INSERT INTO Applicant VALUES(10000001, 'Kanye', 'West');
 
-INSERT INTO Application VALUES('stevenli.com/coverletter.pdf', 'stevenli.com/resume.pdf', 'Offer', 95102885, 10000000, 30000000, 'Asana');
-INSERT INTO Application VALUES('ethanlin.com/coverletter.pdf', 'ethanlin.com/resume.pdf', 'Accepted', 56009681, 10000001, 30000001, 'Google');
-INSERT INTO Application VALUES('antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 75858795, 10000002, 30000002, 'Amazon');
+-- Populate tables
 
-INSERT INTO Internship VALUES(1000, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Happy Land');
-INSERT INTO Internship VALUES(1001, 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google');
-INSERT INTO Internship VALUES(1002, 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Housekeeper');
-INSERT INTO Internship VALUES(1003, 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon');
-INSERT INTO Internship VALUES(1004, 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google');
+INSERT INTO Applicant VALUES 
+( 1, 'Steven', 'Li'), 
+( 2, 'Ethan', 'Lin'), 
+( 3, 'Anton', 'Chen'), 
+( 4, 'Raymond', 'Ng'), 
+( 5, 'Kanye', 'West');
 
-INSERT INTO FullTime VALUES(1005, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Happy Land');
-INSERT INTO FullTime VALUES(1006, 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google');
-INSERT INTO FullTime VALUES(1007, 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Housekeeper');
-INSERT INTO FullTime VALUES(1008, 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon');
-INSERT INTO FullTime VALUES(1009, 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google');
+INSERT INTO Company VALUES 
+( 'Amazon', 'Vine', 'Vancouver', 'BC', 'Canada', 'V2A3A6'), 
+( 'Google', 'Heather', 'Vancouver', 'BC', 'Canada', 'V6H7A6'), 
+( 'Asana' 'Victoria', 'Vancouver', 'BC', 'Canada', 'V2H7U6'), 
+( 'Citadel' 'Queen', 'Vancouver', 'BC', 'Canada', 'V1N4B6'), 
+( 'Rippling' 'Oak', 'Vancouver', 'BC', 'Canada', 'V7A5A6');
 
-INSERT INTO Recruiter VALUES(7800776, 'Steven', 'Li', 'Amazon');
-INSERT INTO Recruiter VALUES(4352343, 'Ethan', 'Lin', 'Amazon');
-INSERT INTO Recruiter VALUES(4365645, 'Anton', 'Chen', 'Happy Land');
-INSERT INTO Recruiter VALUES(4537451, 'Raymond', 'Ng', 'Housekeeper');
-INSERT INTO Recruiter VALUES(1232433, 'Kanye', 'West', 'Google');
+INSERT INTO Internship VALUES 
+( 1, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Asana'), 
+( 2, 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google'), 
+( 3, 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Amazon'), 
+( 4, 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon'), 
+( 5, 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google');
 
-INSERT INTO Company VALUES('Amazon', 'Vine', 'Vancouver', 'BC', 'Canada', 'V2A3A6');
-INSERT INTO Company VALUES('Google', 'Heather', 'Vancouver', 'BC', 'Canada', 'V6H7A6');
-INSERT INTO Company VALUES('Happy', 'Queen', 'Vancouver', 'BC', 'Canada', 'V1N4B6');
-INSERT INTO Company VALUES('Housekeeper', 'Oak', 'Vancouver', 'BC', 'Canada', 'V7A5A6');
-INSERT INTO Company VALUES('Asana', 'Victoria', 'Vancouver', 'BC', 'Canada', 'V2H7U6');
+INSERT INTO FullTime VALUES 
+( 6, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Happy Land'), 
+( 7, 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google'), 
+( 8, 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Housekeeper'), 
+( 9, 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon'), 
+( 10, 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google');
 
-INSERT INTO Interviewer VALUES(7800776, 'Steven', 'Li', 'Senior Engineer', 'Amazon');
-INSERT INTO Interviewer VALUES(4352343, 'Ethan', 'Lin', 'Junior Engineer', 'Amazon');
-INSERT INTO Interviewer VALUES(4365645, 'Anton', 'Chen', 'Junior Engineer', 'Happy Land');
-INSERT INTO Interviewer VALUES(4537451, 'Raymond', 'Ng', 'Project Manager', 'Housekeeper');
-INSERT INTO Interviewer VALUES(1232433, 'Kanye', 'West', 'Principal Engineer', 'Google');
+INSERT INTO Recruiter VALUES 
+( 1, 'Kevin', 'Durant', 'Asana'), 
+( 2, 'Kyrie', 'Irving', 'Google'), 
+( 3, 'Jeff', 'Bezos', 'Amazon'), 
+( 4, 'Lil', 'Pump', 'Housekeeper'), 
+( 5, 'Kanye', 'West', 'Google');
 
-INSERT INTO Host VALUES(7800776, 586785947);
-INSERT INTO Host VALUES(4352343, 928143721);
-INSERT INTO Host VALUES(4365645, 983473298);
-INSERT INTO Host VALUES(4537451, 921837921);
-INSERT INTO Host VALUES(4532421, 872463872);
+INSERT INTO Interviewer VALUES 
+( 1, 'James', 'Harden', 'Senior Engineer', 'Asana'), 
+( 2, 'LeBron', 'James', 'Junior Engineer', 'Google'), 
+( 3, 'Michael', 'Jordan', 'Junior Engineer', 'Amazon'), 
+( 4, 'Stephen', 'Curry', 'Project Manager', 'Housekeeper'), 
+( 5, 'Chris', 'Paus', 'Principal Engineer', 'Google');
 
-INSERT INTO OnlineAssessment1 VALUES('FullTime', 3, 'Easy', 5, 90);
-INSERT INTO OnlineAssessment1 VALUES('FullTime', 5, 'Hard', 5, 10);
-INSERT INTO OnlineAssessment1 VALUES('Intern', 1, 'Easy', 100, 50);
-INSERT INTO OnlineAssessment1 VALUES('FullTime', 6, 'Hard', 60, 70);
-INSERT INTO OnlineAssessment1 VALUES('Intern', 12, 'Medium', 90, 30);
+INSERT INTO Application VALUES 
+( 1, 'stevenli.com/coverletter.pdf', 'stevenli.com/resume.pdf', 'Offer', 1, 1, 1, 'Asana'), 
+( 2, 'ethanlin.com/coverletter.pdf', 'ethanlin.com/resume.pdf', 'Accepted', 2, 2, 2, 'Google'), 
+( 3, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 3, 3, 'Amazon'), 
+( 4, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 2, 2, 'Google'), 
+( 5, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 1, 1, 'Asana');
 
-INSERT INTO OnlineAssessment2 VALUES(7800776, 586785947, 'FullTime', TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 762134827, 73648712);
-INSERT INTO OnlineAssessment2 VALUES(4352343, 928143721, 'FullTime', TO_DATE('12/4/2022', 'DD/MM/YYYY'), TO_DATE('3/5/2023', 'DD/MM/YYYY'), 824637129, 271863427);
-INSERT INTO OnlineAssessment2 VALUES(4365645, 983473298, 'Intern', TO_DATE('10/22/2022', 'DD/MM/YYYY'), TO_DATE('12/30/2022', 'DD/MM/YYYY'), 21984721987, 3984979128);
-INSERT INTO OnlineAssessment2 VALUES(4537451, 921837921, 'FullTime', TO_DATE('2/28/2023', 'DD/MM/YYYY'), TO_DATE('2/28/2024', 'DD/MM/YYYY'), 29387210, 2198347219);
-INSERT INTO OnlineAssessment2 VALUES(4532421, 872463872, 'Intern', TO_DATE('10/30/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 29837219, 129783378);
+INSERT INTO InformationSession VALUES 
+(1, 'zoom', TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'Asana'),
+(2, 'zoom', TO_DATE('5/10/2022', 'DD/MM/YYYY'), 'Google'),
+(3, 'zoom', TO_DATE('10/10/2022', 'DD/MM/YYYY'), 'Amazon').
+(4, 'zoom', TO_DATE('11/11/2022', 'DD/MM/YYYY'), 'Citadel'),
+(5, 'zoom', TO_DATE('12/12/2022', 'DD/MM/YYYY'), 'Rippling');
 
-INSERT INTO PhoneScreen VALUES(7800776, 586785947, 'FullTime', 10, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 762134827, 73648712);
-INSERT INTO PhoneScreen VALUES(4352343, 928143721, 'FullTime', 10, TO_DATE('12/4/2022', 'DD/MM/YYYY'), TO_DATE('3/5/2023', 'DD/MM/YYYY'), 824637129, 271863427);
-INSERT INTO PhoneScreen VALUES(4365645, 983473298, 'Intern', 5, TO_DATE('10/22/2022', 'DD/MM/YYYY'), TO_DATE('12/30/2022', 'DD/MM/YYYY'), 21984721987, 3984979128);
-INSERT INTO PhoneScreen VALUES(4537451, 921837921, 'FullTime', 8, TO_DATE('2/28/2023', 'DD/MM/YYYY'), TO_DATE('2/28/2024', 'DD/MM/YYYY'), 29387210, 2198347219);
-INSERT INTO PhoneScreen VALUES(4532421, 872463872, 'Intern', 20, TO_DATE('10/30/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 29837219, 129783378);
+INSERT INTO OnlineAssessment VALUES 
+(1, 'Intern', 70, 'Easy', 4, 800, TO_DATE('5/2/2022', 'DD/MM/YYYY'), TO_DATE('5/9/2022', 'DD/MM/YYYY'), 1, 1),
+(2, 'Intern', 80, 'Medium', 4, 800, TO_DATE('3/4/2022', 'DD/MM/YYYY'), TO_DATE('5/1/2022', 'DD/MM/YYYY'), 2, 2),
+(3, 'Intern', 90, 'Hard', 4, 800, TO_DATE('5/6/2022', 'DD/MM/YYYY'), TO_DATE('5/19/2022', 'DD/MM/YYYY'), 3, 3),
+(4, 'Intern', 70, 'Medium', 4, 800, TO_DATE('5/7/2022', 'DD/MM/YYYY'), TO_DATE('5/9/2022', 'DD/MM/YYYY'), 3, 2),
+(5, 'Intern', 60, 'Easy', 4, 800, TO_DATE('5/8/2022', 'DD/MM/YYYY'), TO_DATE('6/9/2022', 'DD/MM/YYYY'), 3, 1);
 
-INSERT INTO OnsiteInterview VALUES(7800776, 586785947, 'FullTime', 10, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 762134827, 73648712);
-INSERT INTO OnsiteInterview VALUES(4352343, 928143721, 'FullTime', 10, TO_DATE('12/4/2022', 'DD/MM/YYYY'), TO_DATE('3/5/2023', 'DD/MM/YYYY'), 824637129, 271863427);
-INSERT INTO OnsiteInterview VALUES(4365645, 983473298, 'Intern', 5, TO_DATE('10/22/2022', 'DD/MM/YYYY'), TO_DATE('12/30/2022', 'DD/MM/YYYY'), 21984721987, 3984979128);
-INSERT INTO OnsiteInterview VALUES(4537451, 921837921, 'FullTime', 8, TO_DATE('2/28/2023', 'DD/MM/YYYY'), TO_DATE('2/28/2024', 'DD/MM/YYYY'), 29387210, 2198347219);
-INSERT INTO OnsiteInterview VALUES(4532421, 872463872, 'Intern', 20, TO_DATE('10/30/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 29837219, 129783378);
+INSERT INTO PhoneScreen VALUES 
+(6, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 1, 1),
+(7, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('11/20/2022', 'DD/MM/YYYY'), 2, 2),
+(8, TO_DATE('7/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 3),
+(9, TO_DATE('8/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 1),
+(10, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('6/1/2022', 'DD/MM/YYYY'), 3, 2);
 
-INSERT INTO TeamMatching VALUES(7800776, 586785947, 'FullTime', 10, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 762134827, 73648712);
-INSERT INTO TeamMatching VALUES(4352343, 928143721, 'FullTime', 10, TO_DATE('12/4/2022', 'DD/MM/YYYY'), TO_DATE('3/5/2023', 'DD/MM/YYYY'), 824637129, 271863427);
-INSERT INTO TeamMatching VALUES(4365645, 983473298, 'Intern', 5, TO_DATE('10/22/2022', 'DD/MM/YYYY'), TO_DATE('12/30/2022', 'DD/MM/YYYY'), 21984721987, 3984979128);
-INSERT INTO TeamMatching VALUES(4537451, 921837921, 'FullTime', 8, TO_DATE('2/28/2023', 'DD/MM/YYYY'), TO_DATE('2/28/2024', 'DD/MM/YYYY'), 29387210, 2198347219);
-INSERT INTO TeamMatching VALUES(4532421, 872463872, 'Intern', 20, TO_DATE('10/30/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 29837219, 129783378);
+INSERT INTO OnsiteInterview VALUES 
+(11, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 1, 1),
+(12, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('11/20/2022', 'DD/MM/YYYY'), 2, 2),
+(13, TO_DATE('7/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 3),
+(14, TO_DATE('8/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 1),
+(15, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('6/1/2022', 'DD/MM/YYYY'), 3, 2);
 
-INSERT INTO InformationSession VALUES(7800776, 'zoom', TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'Google');
-INSERT INTO InformationSession VALUES(3847219, 'zoom', TO_DATE('5/10/2022', 'DD/MM/YYYY'), 'Google');
-INSERT INTO InformationSession VALUES(2839721, 'zoom', TO_DATE('10/10/2022', 'DD/MM/YYYY'), 'Amazon');
-INSERT INTO InformationSession VALUES(7238121, 'zoom', TO_DATE('11/11/2022', 'DD/MM/YYYY'), 'Amazon');
-INSERT INTO InformationSession VALUES(2823980, 'zoom', TO_DATE('12/12/2022', 'DD/MM/YYYY'), 'Asana');
+INSERT INTO TeamMatching VALUES 
+(16, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 1, 1),
+(17, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('11/20/2022', 'DD/MM/YYYY'), 2, 2),
+(18, TO_DATE('7/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 3),
+(19, TO_DATE('8/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 1),
+(20, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('6/1/2022', 'DD/MM/YYYY'), 3, 2);
 
-INSERT INTO Participate VALUES(7800776, 586785947, 23232322);
-INSERT INTO Participate VALUES(4352343, 928143721, 23254654);
-INSERT INTO Participate VALUES(4365645, 983473298, 32323223);
-INSERT INTO Participate VALUES(4537451, 921837921, 23235455);
-INSERT INTO Participate VALUES(4532421, 872463872, 325465676);
+INSERT INTO Participate VALUES 
+(1, 1, 1),
+(2, 3, 2),
+(3, 3, 3),
+(3, 1, 1),
+(3, 2, 2);
+
+INSERT INTO Host VALUES
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 5);
