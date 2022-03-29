@@ -1,8 +1,8 @@
 CREATE TABLE Applicant (
-  ApplicantID      int,
+  ApplicantID        int,
   FirstName          varchar(50),
   LastName           varchar(50),
-  PRIMARY KEY (ApplicationID)     
+  PRIMARY KEY (ApplicantID)     
 );
 
 CREATE TABLE Application (
@@ -14,45 +14,27 @@ CREATE TABLE Application (
   PostingID          int,
   RecruiterID        int DEFAULT NULL,
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (ApplicantID, PostingID),
-  FOREIGN KEY (ApplicantID) 
-    REFERENCES Applicant (ApplicantID) 
-      ON DELETE CASCADE,
-  FOREIGN KEY (PostingID) 
-    REFERENCES Posting (PostingID) 
-      ON DELETE CASCADE,
-  FOREIGN KEY (RecruiterID) 
-    REFERENCES Recruiter (RecruiterID) 
-      ON DELETE SET DEFAULT,
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
+  PRIMARY KEY (ApplicantID, PostingID)
 );
 
 CREATE TABLE Internship (
   PostingID          int,
   Salary             int,
   StartDate          date,
-  JobDescription     varchar(100000),
+  JobDescription     varchar(1000),
   Location           varchar(100),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (PostingID),
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
+  PRIMARY KEY (PostingID)
 );
 
 CREATE TABLE FullTime (
   PostingID          int,
   Salary             int,
   StartDate          date,
-  JobDescription     varchar(100000),
+  JobDescription     varchar(1000),
   Location           varchar(100),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (PostingID),
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
+  PRIMARY KEY (PostingID)
 );
 
 CREATE TABLE Company (
@@ -71,22 +53,13 @@ CREATE TABLE Interviewer (
   LastName           varchar(50),
   Position           varchar(50),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (InterviewerID),
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
+  PRIMARY KEY (InterviewerID)
 );
 
 CREATE TABLE Host (
   InterviewID         int,
   InterviewerID       int DEFAULT NULL,
-  PRIMARY KEY (InterviewID, InterviewerID),
-  FOREIGN KEY (InterviewID) 
-    REFERENCES Interview (InterviewID)
-      ON DELETE CASCADE,
-  FOREIGN KEY (InterviewerID) 
-    REFERENCES Interviewer (InterviewerID)
-      ON DELETE SET DEFAULT
+  PRIMARY KEY (InterviewID, InterviewerID)
 );
 
 CREATE TABLE OnlineAssessment (
@@ -100,10 +73,7 @@ CREATE TABLE OnlineAssessment (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID),
-  FOREIGN KEY (ApplicantID, PostingID) 
-    REFERENCES Application (ApplicantID, PostingID) 
-      ON DELETE CASCADE
+  PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE PhoneScreen (
@@ -112,10 +82,7 @@ CREATE TABLE PhoneScreen (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID),
-  FOREIGN KEY (ApplicantID, PostingID)
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE
+  PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE OnsiteInterview (
@@ -124,10 +91,7 @@ CREATE TABLE OnsiteInterview (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID),
-  FOREIGN KEY (ApplicantID, PostingID)
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE
+  PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE TeamMatching (
@@ -136,10 +100,7 @@ CREATE TABLE TeamMatching (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID),
-  FOREIGN KEY (ApplicantID, PostingID)
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE
+  PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE Recruiter (
@@ -147,48 +108,114 @@ CREATE TABLE Recruiter (
   FirstName          varchar(50),
   LastName           varchar(50),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (RecruiterID),
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
+  PRIMARY KEY (RecruiterID)
 );
 
 CREATE TABLE Post (
   ApplicantID        int,
   PostingID          int,
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (ApplicantID, PostingID),
+  PRIMARY KEY (ApplicantID, PostingID)
+);
+
+CREATE TABLE InformationSession (
+  SessionID          int,
+  Location           varchar(100),
+  DateTime           date,
+  CompanyName        varchar(100) NOT NULL,
+  PRIMARY KEY (SessionID)
+);
+
+CREATE TABLE Participates (
+  ApplicantID        int,
+  PostingID          int,
+  SessionID          int,
+  PRIMARY KEY (ApplicantID, PostingID, SessionID)
+);
+
+ALTER TABLE Application ADD
+  FOREIGN KEY (ApplicantID) 
+    REFERENCES Applicant (ApplicantID) 
+      ON DELETE CASCADE,
+  FOREIGN KEY (PostingID) 
+    REFERENCES Posting (PostingID) 
+      ON DELETE CASCADE,
+  FOREIGN KEY (RecruiterID) 
+    REFERENCES Recruiter (RecruiterID) 
+      ON DELETE SET NULL,
+  FOREIGN KEY (CompanyName) 
+    REFERENCES Company (CompanyName) 
+      ON DELETE CASCADE;
+
+ALTER TABLE Internship ADD
+  FOREIGN KEY (CompanyName) 
+    REFERENCES Company (CompanyName) 
+      ON DELETE CASCADE;
+
+ALTER TABLE FullTime ADD
+  FOREIGN KEY (CompanyName) 
+    REFERENCES Company (CompanyName) 
+      ON DELETE CASCADE;
+
+ALTER TABLE Interviewer ADD
+  FOREIGN KEY (CompanyName) 
+    REFERENCES Company (CompanyName) 
+      ON DELETE CASCADE;
+
+ALTER TABLE Host ADD
+  FOREIGN KEY (InterviewID) 
+    REFERENCES Interview (InterviewID)
+      ON DELETE CASCADE,
+  FOREIGN KEY (InterviewerID) 
+    REFERENCES Interviewer (InterviewerID)
+      ON DELETE SET DEFAULT;
+
+ALTER TABLE OnlineAssessment ADD
+  FOREIGN KEY (ApplicantID, PostingID) 
+    REFERENCES Application (ApplicantID, PostingID) 
+      ON DELETE CASCADE;
+
+
+ALTER TABLE PhoneScreen ADD
+  FOREIGN KEY (ApplicantID, PostingID)
+    REFERENCES Application (ApplicantID, PostingID)
+      ON DELETE CASCADE;
+
+ALTER TABLE OnsiteInterview ADD
+  FOREIGN KEY (ApplicantID, PostingID)
+    REFERENCES Application (ApplicantID, PostingID)
+      ON DELETE CASCADE;
+
+ALTER TABLE TeamMatching ADD
+  FOREIGN KEY (ApplicantID, PostingID)
+    REFERENCES Application (ApplicantID, PostingID)
+      ON DELETE CASCADE;
+
+ALTER TABLE Recruiter ADD
+  FOREIGN KEY (CompanyName) 
+    REFERENCES Company (CompanyName) 
+      ON DELETE CASCADE;
+
+ALTER TABLE Recruiter ADD
   FOREIGN KEY (ApplicantID, PostingID) 
     REFERENCES Application (ApplicantID, PostingID),
       ON DELETE CASCADE
   FOREIGN KEY (CompanyName) 
     REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
-);
+      ON DELETE CASCADE;
 
-CREATE TABLE InformationSession (
-  SessionID            int,
-  Location             varchar(100),
-  DateTime             date,
-  CompanyName          varchar(100) NOT NULL,
-  PRIMARY KEY (SessionID), 
+ALTER TABLE InformationSession ADD
   FOREIGN KEY (CompanyName) 
     REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE
-);
+      ON DELETE CASCADE;
 
-CREATE TABLE Participates (
-  ApplicantID          int,
-  PostingID            int,
-  SessionID            int,
-  PRIMARY KEY (ApplicantID, PostingID, SessionID),
+ALTER TABLE Participates ADD
   FOREIGN KEY (ApplicantID, PostingID)
     REFERENCES Application (ApplicantID, PostingID)
       ON DELETE CASCADE,
   FOREIGN KEY (SessionID) 
     REFERENCES InformationSessionHosting(SessionID)
-      ON DELETE CASCADE
-);
+      ON DELETE CASCADE;
 
 INSERT INTO Applicant VALUES(95102885, 'Steven', 'Li');
 INSERT INTO Applicant VALUES(56009681, 'Ethan', 'Lin');
@@ -200,17 +227,17 @@ INSERT INTO Application VALUES('stevenli.com/coverletter.pdf', 'stevenli.com/res
 INSERT INTO Application VALUES('ethanlin.com/coverletter.pdf', 'ethanlin.com/resume.pdf', 'Accepted', 56009681, 10000001, 30000001, 'Google');
 INSERT INTO Application VALUES('antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 75858795, 10000002, 30000002, 'Amazon');
 
-INSERT INTO Internship VALUES(1000, 10, '10/22/2022', 'janitor', 'company bathroom', 'Happy Land');
-INSERT INTO Internship VALUES(1001, 50, '5/1/2022', 'secretary', 'office', 'Google');
-INSERT INTO Internship VALUES(1002, 100, '12/4/2022', 'sales', 'office', 'Housekeeper');
-INSERT INTO Internship VALUES(1003, 500, '10/30/2022', 'worker', 'warehouse', 'Amazon');
-INSERT INTO Internship VALUES(1004, 30, '2/28/2023', 'sorting documents', 'office', 'Google');
+INSERT INTO Internship VALUES(1000, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Happy Land');
+INSERT INTO Internship VALUES(1001, 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google');
+INSERT INTO Internship VALUES(1002, 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Housekeeper');
+INSERT INTO Internship VALUES(1003, 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon');
+INSERT INTO Internship VALUES(1004, 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google');
 
-INSERT INTO FullTime VALUES(1005, 10, '10/22/2022', 'janitor', 'company bathroom', 'Happy Land');
-INSERT INTO FullTime VALUES(1006, 50, '5/1/2022', 'secretary', 'office', 'Google');
-INSERT INTO FullTime VALUES(1007, 100, '12/4/2022', 'sales', 'office', 'Housekeeper');
-INSERT INTO FullTime VALUES(1008, 500, '10/30/2022', 'worker', 'warehouse', 'Amazon');
-INSERT INTO FullTime VALUES(1009, 30, '2/28/2023', 'sorting documents', 'office', 'Google');
+INSERT INTO FullTime VALUES(1005, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Happy Land');
+INSERT INTO FullTime VALUES(1006, 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google');
+INSERT INTO FullTime VALUES(1007, 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Housekeeper');
+INSERT INTO FullTime VALUES(1008, 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon');
+INSERT INTO FullTime VALUES(1009, 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google');
 
 INSERT INTO Recruiter VALUES(7800776, 'Steven', 'Li', 'Amazon');
 INSERT INTO Recruiter VALUES(4352343, 'Ethan', 'Lin', 'Amazon');
@@ -224,11 +251,11 @@ INSERT INTO Company VALUES('Happy', 'Queen', 'Vancouver', 'BC', 'Canada', 'V1N4B
 INSERT INTO Company VALUES('Housekeeper', 'Oak', 'Vancouver', 'BC', 'Canada', 'V7A5A6');
 INSERT INTO Company VALUES('Asana', 'Victoria', 'Vancouver', 'BC', 'Canada', 'V2H7U6');
 
-INSERT INTO Interviewer VALUES(7800776, 'Steven', 'Li', 'Amazon');
-INSERT INTO Interviewer VALUES(4352343, 'Ethan', 'Lin', 'Amazon');
-INSERT INTO Interviewer VALUES(4365645, 'Anton', 'Chen', 'Happy Land');
-INSERT INTO Interviewer VALUES(4537451, 'Raymond', 'Ng', 'Housekeeper');
-INSERT INTO Interviewer VALUES(1232433, 'Kanye', 'West', 'Google');
+INSERT INTO Interviewer VALUES(7800776, 'Steven', 'Li', 'Senior Engineer', 'Amazon');
+INSERT INTO Interviewer VALUES(4352343, 'Ethan', 'Lin', 'Junior Engineer', 'Amazon');
+INSERT INTO Interviewer VALUES(4365645, 'Anton', 'Chen', 'Junior Engineer', 'Happy Land');
+INSERT INTO Interviewer VALUES(4537451, 'Raymond', 'Ng', 'Project Manager', 'Housekeeper');
+INSERT INTO Interviewer VALUES(1232433, 'Kanye', 'West', 'Principal Engineer', 'Google');
 
 INSERT INTO Host VALUES(7800776, 586785947);
 INSERT INTO Host VALUES(4352343, 928143721);
@@ -242,35 +269,35 @@ INSERT INTO OnlineAssessment1 VALUES('Intern', 1, 'Easy', 100, 50);
 INSERT INTO OnlineAssessment1 VALUES('FullTime', 6, 'Hard', 60, 70);
 INSERT INTO OnlineAssessment1 VALUES('Intern', 12, 'Medium', 90, 30);
 
-INSERT INTO OnlineAssessment2 VALUES(7800776, 586785947, 'FullTime', '5/1/2022', '10/30/2022', 762134827, 73648712);
-INSERT INTO OnlineAssessment2 VALUES(4352343, 928143721, 'FullTime', '12/4/2022', '3/5/2023', 824637129, 271863427);
-INSERT INTO OnlineAssessment2 VALUES(4365645, 983473298, 'Intern', '10/22/2022', '12/30/2022', 21984721987, 3984979128);
-INSERT INTO OnlineAssessment2 VALUES(4537451, 921837921, 'FullTime', '2/28/2023', '2/28/2024', 29387210, 2198347219);
-INSERT INTO OnlineAssessment2 VALUES(4532421, 872463872, 'Intern', '10/30/2022', '10/30/2022', 29837219, 129783378);
+INSERT INTO OnlineAssessment2 VALUES(7800776, 586785947, 'FullTime', TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 762134827, 73648712);
+INSERT INTO OnlineAssessment2 VALUES(4352343, 928143721, 'FullTime', TO_DATE('12/4/2022', 'DD/MM/YYYY'), TO_DATE('3/5/2023', 'DD/MM/YYYY'), 824637129, 271863427);
+INSERT INTO OnlineAssessment2 VALUES(4365645, 983473298, 'Intern', TO_DATE('10/22/2022', 'DD/MM/YYYY'), TO_DATE('12/30/2022', 'DD/MM/YYYY'), 21984721987, 3984979128);
+INSERT INTO OnlineAssessment2 VALUES(4537451, 921837921, 'FullTime', TO_DATE('2/28/2023', 'DD/MM/YYYY'), TO_DATE('2/28/2024', 'DD/MM/YYYY'), 29387210, 2198347219);
+INSERT INTO OnlineAssessment2 VALUES(4532421, 872463872, 'Intern', TO_DATE('10/30/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 29837219, 129783378);
 
-INSERT INTO PhoneScreen VALUES(7800776, 586785947, 'FullTime', 10, '5/1/2022', '10/30/2022', 762134827, 73648712);
-INSERT INTO PhoneScreen VALUES(4352343, 928143721, 'FullTime', 10, '12/4/2022', '3/5/2023', 824637129, 271863427);
-INSERT INTO PhoneScreen VALUES(4365645, 983473298, 'Intern', 5, '10/22/2022', '12/30/2022', 21984721987, 3984979128);
-INSERT INTO PhoneScreen VALUES(4537451, 921837921, 'FullTime', 8, '2/28/2023', '2/28/2024', 29387210, 2198347219);
-INSERT INTO PhoneScreen VALUES(4532421, 872463872, 'Intern', 20, '10/30/2022', '10/30/2022', 29837219, 129783378);
+INSERT INTO PhoneScreen VALUES(7800776, 586785947, 'FullTime', 10, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 762134827, 73648712);
+INSERT INTO PhoneScreen VALUES(4352343, 928143721, 'FullTime', 10, TO_DATE('12/4/2022', 'DD/MM/YYYY'), TO_DATE('3/5/2023', 'DD/MM/YYYY'), 824637129, 271863427);
+INSERT INTO PhoneScreen VALUES(4365645, 983473298, 'Intern', 5, TO_DATE('10/22/2022', 'DD/MM/YYYY'), TO_DATE('12/30/2022', 'DD/MM/YYYY'), 21984721987, 3984979128);
+INSERT INTO PhoneScreen VALUES(4537451, 921837921, 'FullTime', 8, TO_DATE('2/28/2023', 'DD/MM/YYYY'), TO_DATE('2/28/2024', 'DD/MM/YYYY'), 29387210, 2198347219);
+INSERT INTO PhoneScreen VALUES(4532421, 872463872, 'Intern', 20, TO_DATE('10/30/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 29837219, 129783378);
 
-INSERT INTO OnsiteInterview VALUES(7800776, 586785947, 'FullTime', 10, '5/1/2022', '10/30/2022', 762134827, 73648712);
-INSERT INTO OnsiteInterview VALUES(4352343, 928143721, 'FullTime', 10, '12/4/2022', '3/5/2023', 824637129, 271863427);
-INSERT INTO OnsiteInterview VALUES(4365645, 983473298, 'Intern', 5, '10/22/2022', '12/30/2022', 21984721987, 3984979128);
-INSERT INTO OnsiteInterview VALUES(4537451, 921837921, 'FullTime', 8, '2/28/2023', '2/28/2024', 29387210, 2198347219);
-INSERT INTO OnsiteInterview VALUES(4532421, 872463872, 'Intern', 20, '10/30/2022', '10/30/2022', 29837219, 129783378);
+INSERT INTO OnsiteInterview VALUES(7800776, 586785947, 'FullTime', 10, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 762134827, 73648712);
+INSERT INTO OnsiteInterview VALUES(4352343, 928143721, 'FullTime', 10, TO_DATE('12/4/2022', 'DD/MM/YYYY'), TO_DATE('3/5/2023', 'DD/MM/YYYY'), 824637129, 271863427);
+INSERT INTO OnsiteInterview VALUES(4365645, 983473298, 'Intern', 5, TO_DATE('10/22/2022', 'DD/MM/YYYY'), TO_DATE('12/30/2022', 'DD/MM/YYYY'), 21984721987, 3984979128);
+INSERT INTO OnsiteInterview VALUES(4537451, 921837921, 'FullTime', 8, TO_DATE('2/28/2023', 'DD/MM/YYYY'), TO_DATE('2/28/2024', 'DD/MM/YYYY'), 29387210, 2198347219);
+INSERT INTO OnsiteInterview VALUES(4532421, 872463872, 'Intern', 20, TO_DATE('10/30/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 29837219, 129783378);
 
-INSERT INTO TeamMatching VALUES(7800776, 586785947, 'FullTime', 10, '5/1/2022', '10/30/2022', 762134827, 73648712);
-INSERT INTO TeamMatching VALUES(4352343, 928143721, 'FullTime', 10, '12/4/2022', '3/5/2023', 824637129, 271863427);
-INSERT INTO TeamMatching VALUES(4365645, 983473298, 'Intern', 5, '10/22/2022', '12/30/2022', 21984721987, 3984979128);
-INSERT INTO TeamMatching VALUES(4537451, 921837921, 'FullTime', 8, '2/28/2023', '2/28/2024', 29387210, 2198347219);
-INSERT INTO TeamMatching VALUES(4532421, 872463872, 'Intern', 20, '10/30/2022', '10/30/2022', 29837219, 129783378);
+INSERT INTO TeamMatching VALUES(7800776, 586785947, 'FullTime', 10, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 762134827, 73648712);
+INSERT INTO TeamMatching VALUES(4352343, 928143721, 'FullTime', 10, TO_DATE('12/4/2022', 'DD/MM/YYYY'), TO_DATE('3/5/2023', 'DD/MM/YYYY'), 824637129, 271863427);
+INSERT INTO TeamMatching VALUES(4365645, 983473298, 'Intern', 5, TO_DATE('10/22/2022', 'DD/MM/YYYY'), TO_DATE('12/30/2022', 'DD/MM/YYYY'), 21984721987, 3984979128);
+INSERT INTO TeamMatching VALUES(4537451, 921837921, 'FullTime', 8, TO_DATE('2/28/2023', 'DD/MM/YYYY'), TO_DATE('2/28/2024', 'DD/MM/YYYY'), 29387210, 2198347219);
+INSERT INTO TeamMatching VALUES(4532421, 872463872, 'Intern', 20, TO_DATE('10/30/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 29837219, 129783378);
 
-INSERT INTO InformationSession VALUES(7800776, 'zoom', '5/1/2022', 'Google');
-INSERT INTO InformationSession VALUES(3847219, 'zoom', '5/10/2022', 'Google');
-INSERT INTO InformationSession VALUES(2839721, 'zoom', '10/10/2022', 'Amazon');
-INSERT INTO InformationSession VALUES(7238121, 'zoom', '11/11/2022', 'Amazon');
-INSERT INTO InformationSession VALUES(2823980, 'zoom', '12/12/2022', 'Asana');
+INSERT INTO InformationSession VALUES(7800776, 'zoom', TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'Google');
+INSERT INTO InformationSession VALUES(3847219, 'zoom', TO_DATE('5/10/2022', 'DD/MM/YYYY'), 'Google');
+INSERT INTO InformationSession VALUES(2839721, 'zoom', TO_DATE('10/10/2022', 'DD/MM/YYYY'), 'Amazon');
+INSERT INTO InformationSession VALUES(7238121, 'zoom', TO_DATE('11/11/2022', 'DD/MM/YYYY'), 'Amazon');
+INSERT INTO InformationSession VALUES(2823980, 'zoom', TO_DATE('12/12/2022', 'DD/MM/YYYY'), 'Asana');
 
 INSERT INTO Participate VALUES(7800776, 586785947, 23232322);
 INSERT INTO Participate VALUES(4352343, 928143721, 23254654);
