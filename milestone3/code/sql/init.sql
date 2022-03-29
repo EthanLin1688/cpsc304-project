@@ -1,5 +1,7 @@
 -- Create table statements
 
+DROP TABLE
+
 CREATE TABLE Applicant (
   ApplicantID        int,
   FirstName          varchar(50),
@@ -19,18 +21,9 @@ CREATE TABLE Application (
   PRIMARY KEY (ApplicantID, PostingID)
 );
 
-CREATE TABLE Internship (
+CREATE TABLE Posting (
   PostingID          int,
-  Salary             int,
-  StartDate          date,
-  JobDescription     varchar(1000),
-  Location           varchar(100),
-  CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (PostingID)
-);
-
-CREATE TABLE FullTime (
-  PostingID          int,
+  PostingType        varchar(20),
   Salary             int,
   StartDate          date,
   JobDescription     varchar(1000),
@@ -130,90 +123,92 @@ CREATE TABLE Participates (
 
 -- Add foreign keys
 
-ALTER TABLE Application ADD
-  FOREIGN KEY (ApplicantID) 
-    REFERENCES Applicant (ApplicantID) 
-      ON DELETE CASCADE,
-  FOREIGN KEY (PostingID) 
-    REFERENCES Posting (PostingID) 
-      ON DELETE CASCADE,
-  FOREIGN KEY (RecruiterID) 
-    REFERENCES Recruiter (RecruiterID) 
-      ON DELETE SET NULL,
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE;
+ALTER TABLE Application 
+  ADD CONSTRAINT application_fk_applicant
+    FOREIGN KEY (ApplicantID) 
+      REFERENCES Applicant (ApplicantID) 
+        ON DELETE CASCADE,
+  ADD CONSTRAINT application_fk_posting
+    FOREIGN KEY (PostingID) 
+      REFERENCES Posting (PostingID) 
+        ON DELETE CASCADE,
+  ADD CONSTRAINT application_fk_recruiter
+    FOREIGN KEY (RecruiterID) 
+      REFERENCES Recruiter (RecruiterID) 
+        ON DELETE SET NULL,
+  ADD CONSTRAINT application_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE;
 
-ALTER TABLE Internship ADD
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE;
+ALTER TABLE Posting
+  ADD CONSTRAINT posting_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE;
 
-ALTER TABLE FullTime ADD
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE;
+ALTER TABLE Interviewer 
+  ADD CONSTRAINT interviewer_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE;
 
-ALTER TABLE Interviewer ADD
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE;
+ALTER TABLE Host 
+  ADD CONSTRAINT host_fk_interview
+    FOREIGN KEY (InterviewID) 
+      REFERENCES Interview (InterviewID)
+        ON DELETE CASCADE,
+  ADD CONSTRAINT host_fk_interviewer
+    FOREIGN KEY (InterviewerID) 
+      REFERENCES Interviewer (InterviewerID)
+        ON DELETE SET DEFAULT;
 
-ALTER TABLE Host ADD
-  FOREIGN KEY (InterviewID) 
-    REFERENCES Interview (InterviewID)
-      ON DELETE CASCADE,
-  FOREIGN KEY (InterviewerID) 
-    REFERENCES Interviewer (InterviewerID)
-      ON DELETE SET DEFAULT;
-
-ALTER TABLE OnlineAssessment ADD
-  FOREIGN KEY (ApplicantID, PostingID) 
-    REFERENCES Application (ApplicantID, PostingID) 
-      ON DELETE CASCADE;
+ALTER TABLE OnlineAssessment 
+  ADD CONSTRAINT online_assessment_fk_application
+    FOREIGN KEY (ApplicantID, PostingID) 
+      REFERENCES Application (ApplicantID, PostingID) 
+        ON DELETE CASCADE;
 
 
-ALTER TABLE PhoneScreen ADD
-  FOREIGN KEY (ApplicantID, PostingID)
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE;
+ALTER TABLE PhoneScreen
+  ADD CONSTRAINT phone_screen_fk_application
+    FOREIGN KEY (ApplicantID, PostingID)
+      REFERENCES Application (ApplicantID, PostingID)
+        ON DELETE CASCADE;
 
-ALTER TABLE OnsiteInterview ADD
-  FOREIGN KEY (ApplicantID, PostingID)
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE;
+ALTER TABLE OnsiteInterview
+  ADD CONSTRAINT onsite_interview_fk_application
+    FOREIGN KEY (ApplicantID, PostingID)
+      REFERENCES Application (ApplicantID, PostingID)
+        ON DELETE CASCADE;
 
-ALTER TABLE TeamMatching ADD
-  FOREIGN KEY (ApplicantID, PostingID)
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE;
+ALTER TABLE TeamMatching
+  ADD CONSTRAINT team_matching_fk_application
+    FOREIGN KEY (ApplicantID, PostingID)
+      REFERENCES Application (ApplicantID, PostingID)
+        ON DELETE CASCADE;
 
-ALTER TABLE Recruiter ADD
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE;
-
-ALTER TABLE Recruiter ADD
-  FOREIGN KEY (ApplicantID, PostingID) 
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE;
+ALTER TABLE Recruiter
+  ADD CONSTRAINT recruiter_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE;
 
 ALTER TABLE InformationSession ADD
-  FOREIGN KEY (CompanyName) 
-    REFERENCES Company (CompanyName) 
-      ON DELETE CASCADE;
+  ADD CONSTRAINT information_session_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE;
 
 ALTER TABLE Participates ADD
-  FOREIGN KEY (ApplicantID, PostingID)
-    REFERENCES Application (ApplicantID, PostingID)
-      ON DELETE CASCADE,
-  FOREIGN KEY (SessionID) 
-    REFERENCES InformationSessionHosting(SessionID)
-      ON DELETE CASCADE;
-
+  ADD CONSTRAINT participates_fk_application
+    FOREIGN KEY (ApplicantID, PostingID)
+      REFERENCES Application (ApplicantID, PostingID)
+        ON DELETE CASCADE,
+  ADD CONSTRAINT participates_fk_information_session
+    FOREIGN KEY (SessionID) 
+      REFERENCES InformationSession(SessionID)
+        ON DELETE CASCADE;
 
 -- Populate tables
 
@@ -226,18 +221,13 @@ INTO Applicant VALUES (5, 'Kanye', 'West')
 INTO Company VALUES ('Amazon', 'Vine', 'Vancouver', 'BC', 'Canada', 'V2A3A6')
 INTO Company VALUES ('Google', 'Heather', 'Vancouver', 'BC', 'Canada', 'V6H7A6')
 INTO Company VALUES ('Asana', 'Victoria', 'Vancouver', 'BC', 'Canada', 'V2H7U6')
-INTO Company VALUES ('Citadel' 'Queen', 'Vancouver', 'BC', 'Canada', 'V1N4B6')
+INTO Company VALUES ('Citadel', 'Queen', 'Vancouver', 'BC', 'Canada', 'V1N4B6')
 INTO Company VALUES ('Rippling' 'Oak', 'Vancouver', 'BC', 'Canada', 'V7A5A6')
-INTO Internship VALUES (1, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Asana')
-INTO Internship VALUES (2, 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google')
-INTO Internship VALUES (3, 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Amazon')
-INTO Internship VALUES (4, 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon')
-INTO Internship VALUES (5, 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google')
-INTO FullTime VALUES (6, 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Happy Land')
-INTO FullTime VALUES (7, 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google')
-INTO FullTime VALUES (8, 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Housekeeper')
-INTO FullTime VALUES (9, 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon')
-INTO FullTime VALUES (10, 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google')
+INTO Posting VALUES (1, 'Internship', 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Asana')
+INTO Posting VALUES (2, 'Internship', 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google')
+INTO Posting VALUES (3, 'FullTime', 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Amazon')
+INTO Posting VALUES (4, 'FullTime', 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon')
+INTO Posting VALUES (5, 'Internship', 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google')
 INTO Recruiter VALUES (1, 'Kevin', 'Durant', 'Asana')
 INTO Recruiter VALUES (2, 'Kyrie', 'Irving', 'Google')
 INTO Recruiter VALUES (3, 'Jeff', 'Bezos', 'Amazon')
