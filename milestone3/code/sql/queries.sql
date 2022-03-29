@@ -1,8 +1,36 @@
+-- INSERT
+-- "Insert a new job internship job posting"
+INSERT 
+INTO Internship 
+VALUES (
+  :posting_id, 
+  :salary, 
+  :start_date, 
+  :job_description, 
+  :location, 
+  :company_name
+);
+
+-- DELETE
+-- "Remove a company from the database."
+DELETE 
+FROM Company C
+WHERE C.CompanyName = :company_name;
+
+-- UPDATE
+-- "Reject an applicant from all applied positions at a company."
+UPDATE Applications AP, Applicant A
+SET AP.Decision = 'rejected'
+WHERE A.ApplicantID = AP.ApplicantID 
+  AND A.FirstName = :first_name
+  AND A.LastAnme = :last_name
+  AND AP.CompanyName = :company_name;
+
 -- SELECTION
--- "Find all the information sessions at specified location and after a specified date"
+-- "Find all the information sessions at specified location"
 SELECT *
 FROM InformationSession I
-WHERE I.Location IS :location AND I.DateTime > :datetime;
+WHERE I.Location IS :location;
 
 -- PROJECTION QUERY
 -- "Find the names of all companies which have internships available."
