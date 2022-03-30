@@ -121,104 +121,104 @@ CREATE TABLE Participate (
 
 -- Add foreign keys
 
--- ALTER TABLE JobApplication ADD (
---   CONSTRAINT application_fk_applicant
---     FOREIGN KEY (ApplicantID) 
---       REFERENCES Applicant (ApplicantID) 
---         ON DELETE CASCADE,
---   CONSTRAINT application_fk_posting
---     FOREIGN KEY (PostingID) 
---       REFERENCES Posting (PostingID) 
---         ON DELETE CASCADE,
---   CONSTRAINT application_fk_recruiter
---     FOREIGN KEY (RecruiterID) 
---       REFERENCES Recruiter (RecruiterID) 
---         ON DELETE SET NULL,
---   CONSTRAINT application_fk_company
---     FOREIGN KEY (CompanyName) 
---       REFERENCES Company (CompanyName) 
---         ON DELETE CASCADE
--- );
--- 
--- ALTER TABLE Posting ADD (
---   CONSTRAINT posting_fk_company
---     FOREIGN KEY (CompanyName) 
---       REFERENCES Company (CompanyName) 
---         ON DELETE CASCADE
--- );
--- 
--- ALTER TABLE Interviewer ADD (
---   CONSTRAINT interviewer_fk_company
---     FOREIGN KEY (CompanyName) 
---       REFERENCES Company (CompanyName) 
---         ON DELETE CASCADE
--- );
--- 
--- ALTER TABLE Host ADD (
---   CONSTRAINT host_fk_interview
---     FOREIGN KEY (InterviewID) 
---       REFERENCES Interview (InterviewID)
---         ON DELETE CASCADE,
---   CONSTRAINT host_fk_interviewer
---     FOREIGN KEY (InterviewerID) 
---       REFERENCES Interviewer (InterviewerID)
---         ON DELETE SET DEFAULT
--- );
--- 
--- ALTER TABLE OnlineAssessment ADD (
---   CONSTRAINT online_assessment_fk_application 
---     FOREIGN KEY (ApplicantID, PostingID) 
---       REFERENCES JobApplication (ApplicantID, PostingID) 
---         ON DELETE CASCADE
--- );
--- 
--- ALTER TABLE PhoneScreen ADD (
---   CONSTRAINT phone_screen_fk_application
---     FOREIGN KEY (ApplicantID, PostingID)
---       REFERENCES JobApplication (ApplicantID, PostingID)
---         ON DELETE CASCADE
--- );
--- 
--- ALTER TABLE OnsiteInterview ADD (
---   CONSTRAINT onsite_interview_fk_application
---     FOREIGN KEY (ApplicantID, PostingID)
---       REFERENCES JobApplication (ApplicantID, PostingID)
---         ON DELETE CASCADE
--- );
--- 
--- ALTER TABLE TeamMatching ADD (
---   CONSTRAINT team_matching_fk_application
---     FOREIGN KEY (ApplicantID, PostingID)
---       REFERENCES JobApplication (ApplicantID, PostingID)
---         ON DELETE CASCADE
--- );
--- 
--- ALTER TABLE Recruiter ADD (
---   CONSTRAINT recruiter_fk_company
---     FOREIGN KEY (CompanyName) 
---       REFERENCES Company (CompanyName) 
---         ON DELETE CASCADE
--- );
--- 
--- ALTER TABLE InformationSession ADD (
---   CONSTRAINT information_session_fk_company
---     FOREIGN KEY (CompanyName) 
---       REFERENCES Company (CompanyName) 
---         ON DELETE CASCADE
--- );
--- 
--- ALTER TABLE Participate ADD (
---   CONSTRAINT participates_fk_application
---     FOREIGN KEY (ApplicantID, PostingID)
---       REFERENCES JobApplication (ApplicantID, PostingID)
---         ON DELETE CASCADE,
---   CONSTRAINT participates_fk_information_session
---     FOREIGN KEY (SessionID) 
---       REFERENCES InformationSession(SessionID)
---         ON DELETE CASCADE
--- );
--- 
--- -- Populate tables
+ALTER TABLE JobApplication ADD (
+  CONSTRAINT application_fk_applicant
+    FOREIGN KEY (ApplicantID) 
+      REFERENCES Applicant (ApplicantID) 
+        ON DELETE CASCADE,
+  CONSTRAINT application_fk_posting
+    FOREIGN KEY (PostingID) 
+      REFERENCES Posting (PostingID) 
+        ON DELETE CASCADE,
+  CONSTRAINT application_fk_recruiter
+    FOREIGN KEY (RecruiterID) 
+      REFERENCES Recruiter (RecruiterID) 
+        ON DELETE SET NULL,
+  CONSTRAINT application_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE
+);
+
+ALTER TABLE Posting ADD (
+  CONSTRAINT posting_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE
+);
+
+ALTER TABLE Interviewer ADD (
+  CONSTRAINT interviewer_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE
+);
+
+ALTER TABLE Host ADD (
+  CONSTRAINT host_fk_interview
+    FOREIGN KEY (InterviewID) 
+      REFERENCES Interview (InterviewID)
+        ON DELETE CASCADE,
+  CONSTRAINT host_fk_interviewer
+    FOREIGN KEY (InterviewerID) 
+      REFERENCES Interviewer (InterviewerID)
+        ON DELETE SET DEFAULT
+);
+
+ALTER TABLE OnlineAssessment ADD (
+  CONSTRAINT online_assessment_fk_application 
+    FOREIGN KEY (ApplicantID, PostingID) 
+      REFERENCES JobApplication (ApplicantID, PostingID) 
+        ON DELETE CASCADE
+);
+
+ALTER TABLE PhoneScreen ADD (
+  CONSTRAINT phone_screen_fk_application
+    FOREIGN KEY (ApplicantID, PostingID)
+      REFERENCES JobApplication (ApplicantID, PostingID)
+        ON DELETE CASCADE
+);
+
+ALTER TABLE OnsiteInterview ADD (
+  CONSTRAINT onsite_interview_fk_application
+    FOREIGN KEY (ApplicantID, PostingID)
+      REFERENCES JobApplication (ApplicantID, PostingID)
+        ON DELETE CASCADE
+);
+
+ALTER TABLE TeamMatching ADD (
+  CONSTRAINT team_matching_fk_application
+    FOREIGN KEY (ApplicantID, PostingID)
+      REFERENCES JobApplication (ApplicantID, PostingID)
+        ON DELETE CASCADE
+);
+
+ALTER TABLE Recruiter ADD (
+  CONSTRAINT recruiter_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE
+);
+
+ALTER TABLE InformationSession ADD (
+  CONSTRAINT information_session_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE
+);
+
+ALTER TABLE Participate ADD (
+  CONSTRAINT participates_fk_application
+    FOREIGN KEY (ApplicantID, PostingID)
+      REFERENCES JobApplication (ApplicantID, PostingID)
+        ON DELETE CASCADE,
+  CONSTRAINT participates_fk_information_session
+    FOREIGN KEY (SessionID) 
+      REFERENCES InformationSession(SessionID)
+        ON DELETE CASCADE
+);
+
+-- Populate tables
 -- INSERT ALL
 -- INTO Applicant VALUES (1, 'Steven', 'Li')
 -- INTO Applicant VALUES (2, 'Ethan', 'Lin') 
