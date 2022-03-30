@@ -7,8 +7,8 @@ CREATE TABLE Applicant (
   CONSTRAINT applicant_pk PRIMARY KEY (ApplicantID)     
 );
 
-CREATE TABLE Application (
-  ApplicationID      int,
+CREATE TABLE JobApplication (
+  JobApplicationID      int,
   CoverLetterLink    varchar(100),
   ResumeLink         varchar(100),
   Decision           varchar(20),
@@ -121,7 +121,7 @@ CREATE TABLE Participate (
 
 -- Add foreign keys
 
-ALTER TABLE Application ADD (
+ALTER TABLE JobApplication ADD (
   CONSTRAINT application_fk_applicant
     FOREIGN KEY (ApplicantID) 
       REFERENCES Applicant (ApplicantID) 
@@ -168,28 +168,28 @@ ALTER TABLE Host ADD (
 ALTER TABLE OnlineAssessment ADD (
   CONSTRAINT online_assessment_fk_application 
     FOREIGN KEY (ApplicantID, PostingID) 
-      REFERENCES Application (ApplicantID, PostingID) 
+      REFERENCES JobApplication (ApplicantID, PostingID) 
         ON DELETE CASCADE
 );
 
 ALTER TABLE PhoneScreen ADD (
   CONSTRAINT phone_screen_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
-      REFERENCES Application (ApplicantID, PostingID)
+      REFERENCES JobApplication (ApplicantID, PostingID)
         ON DELETE CASCADE
 );
 
 ALTER TABLE OnsiteInterview ADD (
   CONSTRAINT onsite_interview_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
-      REFERENCES Application (ApplicantID, PostingID)
+      REFERENCES JobApplication (ApplicantID, PostingID)
         ON DELETE CASCADE
 );
 
 ALTER TABLE TeamMatching ADD (
   CONSTRAINT team_matching_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
-      REFERENCES Application (ApplicantID, PostingID)
+      REFERENCES JobApplication (ApplicantID, PostingID)
         ON DELETE CASCADE
 );
 
@@ -210,7 +210,7 @@ ALTER TABLE InformationSession ADD (
 ALTER TABLE Participate ADD (
   CONSTRAINT participates_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
-      REFERENCES Application (ApplicantID, PostingID)
+      REFERENCES JobApplication (ApplicantID, PostingID)
         ON DELETE CASCADE,
   CONSTRAINT participates_fk_information_session
     FOREIGN KEY (SessionID) 
@@ -245,11 +245,11 @@ INTO Interviewer VALUES (2, 'LeBron', 'James', 'Junior Engineer', 'Google')
 INTO Interviewer VALUES (3, 'Michael', 'Jordan', 'Junior Engineer', 'Amazon')
 INTO Interviewer VALUES (4, 'Stephen', 'Curry', 'Project Manager', 'Rippling')
 INTO Interviewer VALUES (5, 'Chris', 'Paus', 'Principal Engineer', 'Google')
-INTO Application VALUES (1, 'stevenli.com/coverletter.pdf', 'stevenli.com/resume.pdf', 'Offer', 1, 1, 1, 'Asana')
-INTO Application VALUES (2, 'ethanlin.com/coverletter.pdf', 'ethanlin.com/resume.pdf', 'Accepted', 2, 2, 2, 'Google')
-INTO Application VALUES (3, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 3, 3, 'Amazon')
-INTO Application VALUES (4, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 2, 2, 'Google')
-INTO Application VALUES (5, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 1, 1, 'Asana')
+INTO JobApplication VALUES (1, 'stevenli.com/coverletter.pdf', 'stevenli.com/resume.pdf', 'Offer', 1, 1, 1, 'Asana')
+INTO JobApplication VALUES (2, 'ethanlin.com/coverletter.pdf', 'ethanlin.com/resume.pdf', 'Accepted', 2, 2, 2, 'Google')
+INTO JobApplication VALUES (3, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 3, 3, 'Amazon')
+INTO JobApplication VALUES (4, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 2, 2, 'Google')
+INTO JobApplication VALUES (5, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 1, 1, 'Asana')
 INTO InformationSession VALUES (1, 'zoom', TO_DATE('5/1/2022', 'MM/DD/YYYY'), 'Asana')
 INTO InformationSession VALUES (2, 'zoom', TO_DATE('5/10/2022', 'MM/DD/YYYY'), 'Google')
 INTO InformationSession VALUES (3, 'zoom', TO_DATE('10/10/2022', 'MM/DD/YYYY'), 'Amazon')
