@@ -1,18 +1,18 @@
 -- Create table statements
 
-DROP TABLE IF EXISTS Applicant;
-DROP TABLE IF EXISTS Application;
-DROP TABLE IF EXISTS Posting;
-DROP TABLE IF EXISTS Company;
-DROP TABLE IF EXISTS Interviewer;
-DROP TABLE IF EXISTS Host;
-DROP TABLE IF EXISTS OnlineAssessment;
-DROP TABLE IF EXISTS PhoneScreen;
-DROP TABLE IF EXISTS OnsiteInterview;
-DROP TABLE IF EXISTS TeamMatching;
-DROP TABLE IF EXISTS Recruiter;
-DROP TABLE IF EXISTS InformationSession;
-DROP TABLE IF EXISTS Participates;
+DROP TABLE Applicant;
+DROP TABLE Application;
+DROP TABLE Posting;
+DROP TABLE Company;
+DROP TABLE Interviewer;
+DROP TABLE Host;
+DROP TABLE OnlineAssessment;
+DROP TABLE PhoneScreen;
+DROP TABLE OnsiteInterview;
+DROP TABLE TeamMatching;
+DROP TABLE Recruiter;
+DROP TABLE InformationSession;
+DROP TABLE Participate;
 
 CREATE TABLE Applicant (
   ApplicantID        int,
@@ -126,7 +126,7 @@ CREATE TABLE InformationSession (
   PRIMARY KEY (SessionID)
 );
 
-CREATE TABLE Participates (
+CREATE TABLE Participate (
   ApplicantID        int,
   PostingID          int,
   SessionID          int,
@@ -222,7 +222,7 @@ ALTER TABLE InformationSession ADD (
 );
 
 
-ALTER TABLE Participates ADD (
+ALTER TABLE Participate ADD (
   CONSTRAINT participates_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES Application (ApplicantID, PostingID)
