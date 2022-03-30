@@ -147,13 +147,13 @@ ALTER TABLE Posting ADD (
         ON DELETE CASCADE
 );
 
--- ALTER TABLE Interviewer ADD (
---   CONSTRAINT interviewer_fk_company
---     FOREIGN KEY (CompanyName) 
---       REFERENCES Company (CompanyName) 
---         ON DELETE CASCADE
--- );
--- 
+ALTER TABLE Interviewer ADD (
+  CONSTRAINT interviewer_fk_company
+    FOREIGN KEY (CompanyName) 
+      REFERENCES Company (CompanyName) 
+        ON DELETE CASCADE
+);
+
 -- ALTER TABLE Host ADD (
 --   CONSTRAINT host_fk_interview
 --     FOREIGN KEY (InterviewID) 
