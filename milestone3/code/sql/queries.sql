@@ -1,9 +1,10 @@
 -- INSERT
--- "Insert a new job internship job posting."
+-- "Insert a new job posting."
 INSERT 
-INTO Internship 
+INTO Posting 
 VALUES (
   :posting_id, 
+  :posting_type,
   :salary, 
   :start_date, 
   :job_description, 
