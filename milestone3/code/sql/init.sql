@@ -296,7 +296,7 @@ INTO TeamMatching VALUES
 INTO TeamMatching VALUES 
 (20, TO_DATE('6/2/2022', 'MM/DD/YYYY'), TO_DATE('6/1/2022', 'MM/DD/YYYY'), 3, 2)
 INTO Participate VALUES (1, 1, 1)
-INTO Participate VALUES (2, 3, 2)
+INTO Participate VALUES (2, 2, 2)
 INTO Participate VALUES (3, 3, 3)
 INTO Participate VALUES (3, 1, 1)
 INTO Participate VALUES (3, 2, 2)
