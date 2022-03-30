@@ -28,13 +28,13 @@
         <p>Insert a new posting</p>
         <form method="POST" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-            Posting ID: <input type="text" name="postingID"> <br /><br />
-            Posting Type: <input type="text" name="postingName"> <br /><br />
-            Salary: <input type="text" name="salary"> <br /><br />
-            Start Date (MM/DD/YYYY): <input type="text" name="startDate"> <br /><br />
-            Job Description: <input type="text" name="jobDescription"> <br /><br />
-            Posting Location : <input type="text" name="postingLocation"> <br /><br />
-            Company Name: <input type="text" name="companyName"> <br /><br />
+            Posting ID: <input type="text" name="insertPostingID"> <br /><br />
+            Posting Type: <input type="text" name="insertPostingType"> <br /><br />
+            Salary: <input type="text" name="insertSalary"> <br /><br />
+            Start Date (MM/DD/YYYY): <input type="text" name="insertStartDate"> <br /><br />
+            Job Description: <input type="text" name="insertJobDescription"> <br /><br />
+            Posting Location : <input type="text" name="insertPostingLocation"> <br /><br />
+            Company Name: <input type="text" name="insertCompanyName"> <br /><br />
             <input type="submit" value="Insert" name="insertSubmit"></p>
         </form>
         <hr />
@@ -43,7 +43,7 @@
         <p> Remove a company from the database </p>
         <form method="POST" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="deleteQueryRequest" name="deleteQueryRequest">
-            Company Name: <input type="text" name="companyName"> <br /><br />
+            Company Name: <input type="text" name="deleteCompanyName"> <br /><br />
             <input type="submit" value="Delete" name="deleteSubmit"></p>
         </form>
         <hr />
@@ -52,9 +52,9 @@
         <p>Reject an applicant from all applied positions at a company</p>
         <form method="POST" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-            First Name: <input type="text" name="firstName"> <br /><br />
-            Last Name: <input type="text" name="lastName"> <br /><br />
-            Company Name: <input type="text" name="companyName"> <br /><br />
+            First Name: <input type="text" name="updateFirstName"> <br /><br />
+            Last Name: <input type="text" name="updateLastName"> <br /><br />
+            Company Name: <input type="text" name="updateCompanyName"> <br /><br />
             <input type="submit" value="Update" name="updateSubmit"></p>
         </form>
         <hr />
@@ -63,24 +63,24 @@
         <p>Find all the information sessions at specified location </p>
         <form method="GET" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="selectionQueryRequest" name="selectionQueryRequest">
-            Location: <input type="text" name="location"> <br /><br />
-            <input type="submit" name="selectSubmit"></p>
+            Location: <input type="text" name="selectionLocation"> <br /><br />
+            <input type="submit" name="selectionSubmit"></p>
         </form>
         <hr />
 
         <h2>Projection Query</h2>
-        <p>Find the names of all the companies which have internships availible</p>
+        <p>Find the names of all the companies which have positions availible.</p>
         <form method="GET" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="projectionQueryRequest" name="projectionQueryRequest">
             <input type="submit" name="projectionSubmit"></p>
         </form>
         <hr />
 
-        <h2>Join Applicant, Application, Internship Tables</h2>
-        <p>Select all applicants who have been offered a position in a given Location</p>
+        <h2>Join Applicant, Application, Position Tables</h2>
+        <p>Select all applicants who will join a position in a given location.</p>
         <form method="GET" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="joinQueryRequest" name="joinQueryRequest">
-            Location: <input type="text" name="values"> <br /><br />
+            Location: <input type="text" name="joinLocation"> <br /><br />
             <input type="submit" name="joinSubmit"></p>
         </form>
         <hr />
@@ -93,14 +93,14 @@
         </form>
 
         <h2>Nested Aggregation with Group By</h2>
-        <p>Find the company who has accepted the most interns.</p>
+        <p>Find the company who has given out the most offers.</p>
         <form method="GET" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="nestedAggregationRequest" name="nestedAggregationRequest">
             <input type="submit" name="nestedAggregationSubmit"></p>
         </form>
 
         <h2>Division</h2>
-        <p>Find all the applicants who have applied to every company that offers internships</p>
+        <p>Find all the applicants who have applied to every company that has open postings.</p>
         <form method="GET" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="divisionQueryRequest" name="divisionQueryRequest">
             <input type="submit" name="divisionSubmit"></p>
@@ -198,7 +198,7 @@
 
             // Your username is ora_(CWL_ID) and the password is a(student number). For example,
 			// ora_platypus is the username and a12345678 is the password.
-            $db_conn = OCILogon("ora_ssl59", "a95102885", "dbhost.students.cs.ubc.ca:1522/stu");
+            $db_conn = OCILogon("ora_azchen", "a75858795", "dbhost.students.cs.ubc.ca:1522/stu");
 
             if ($db_conn) {
                 debugAlertMessage("Database is Connected");
@@ -218,64 +218,387 @@
             OCILogoff($db_conn);
         }
 
-        function handleUpdateRequest() {
-            global $db_conn;
+        #function handleUpdateRequest() {
+        #    global $db_conn;
 
-            $old_name = $_POST['oldName'];
-            $new_name = $_POST['newName'];
+        #    $old_name = $_POST['oldName'];
+        #    $new_name = $_POST['newName'];
 
-            // you need the wrap the old name and new name values with single quotations
-            executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
-            OCICommit($db_conn);
-        }
-
-        function handleSelectionRequest() {
-            global $db_conn;
-
-            $old_name = $_POST['oldName'];
-            $new_name = $_POST['newName'];
-
-            // you need the wrap the old name and new name values with single quotations
-            executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
-            OCICommit($db_conn);
-        }
+        #    // you need the wrap the old name and new name values with single quotations
+        #    executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
+        #    OCICommit($db_conn);
+        #}
         
         function handleInsertRequest() {
             global $db_conn;
 
             //Getting the values from user and insert data into the table
             $tuple = array (
-                ":bind1" => $_POST['postingID'],
-                ":bind2" => $_POST['postingType'],
-                ":bind3" => $_POST['salary'],
-                ":bind4" => strtotime($_POST['startDate']),
-                ":bind5" => $_POST['jobDescription'],
-                ":bind6" => $_POST['postingLocation'],
-                ":bind7" => $_POST['companyName'],
+                ":posting_id" => $_POST['insertPostingID'],
+                ":posting_type" => $_POST['insertPostingType'],
+                ":salary" => $_POST['insertSalary'],
+                ":job_description" => $_POST['insertJobDescription'],
+                ":posting_location" => $_POST['insertPostingLocation'],
+                ":company_name" => $_POST['insertCompanyName'],
             );
 
             $alltuples = array (
                 $tuple
             );
 
-            write_to_console($alltuples);
-
-            executeBoundSQL("INSERT into Posting (PostingID, PostingType, Salary, StartDate, JobDescription, PostingLocation, CompanyName) values (:bind1, :bind2, :bind3, :bind4, :bind5, :bind6, :bind7)", $alltuples);
+            executeBoundSQL("
+				INSERT INTO Posting (
+					PostingID, 
+					PostingType, 
+					Salary, 
+					StartDate,
+					JobDescription,
+					PostingLocation,
+					CompanyName
+				) 
+				VALUES (
+					:posting_id, 
+					:posting_type, 
+					:salary, 
+					TO_DATE('".$_POST['insertStartDate']."', 'dd-mm-yyyy'), 
+					:job_description, 
+					:posting_location, 
+					:company_name)
+				", 
+			$alltuples);
             
-            $result = executePlainSQL("SELECT PostingID, PostingType, Salary, StartDate, JobDescription, PostingLocation, CompanyName FROM Posting");
+            $result = executePlainSQL("SELECT * FROM Posting");
 
             echo "<br>Retrieved data from Posting table:<br>";
             echo "<table>";
             echo "<tr><th>Posting ID</th><th>Posting Type</th><th>Salary</th><th>Start Date</th><th>Job Description</th><th>Posting Location</th><th>Company Name</th></tr>";
 
             while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td>" . $row[5] . "</td><td>" . $row[6] . "</td></tr>"; //or just use "echo $row[0]"
+                echo "<tr>" . 
+						"<td>" . $row[0] . "</td>" . 
+						"<td>" . $row[1] . "</td>" . 
+						"<td>" . $row[2] . "</td>" . 
+						"<td>" . $row[3] . "</td>" . 
+						"<td>" . $row[4] . "</td>" . 
+						"<td>" . $row[5] . "</td>" . 
+						"<td>" . $row[6] . "</td>" . 
+					"<tr>";
             }
 
             echo "</table>";
             
             OCICommit($db_conn);
         }
+
+		function handleDeleteRequest() {
+            global $db_conn;
+
+            $tuple = array (
+                ":company_name" => $_POST['deleteCompanyName'],
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+			executeBoundSQL("
+				DELETE 
+				FROM Company C
+				WHERE C.CompanyName = :company_name
+			", $alltuples);
+
+            $result = executePlainSQL("SELECT * FROM Company");
+
+            echo "<br>Retrieved data from Company table:<br>";
+            echo "<table>";
+            echo "
+				<tr>
+					<th>Company Name</th>
+					<th>Street Name</th>
+					<th>City</th>
+					<th>State/Province</th>
+					<th>Country</th>
+					<th>Postal Code</th>
+				</tr>
+			";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>" . 
+						"<td>" . $row[0] . "</td>" . 
+						"<td>" . $row[1] . "</td>" . 
+						"<td>" . $row[2] . "</td>" . 
+						"<td>" . $row[3] . "</td>" . 
+						"<td>" . $row[4] . "</td>" . 
+						"<td>" . $row[5] . "</td>" . 
+					"<tr>"; //or just use "echo $row[0]"
+            }
+
+            echo "</table>";
+            
+            OCICommit($db_conn);
+		}
+
+		function handleUpdateRequest() {
+            global $db_conn;
+
+            $tuple = array (
+                ":first_name" => $_POST['updateFirstName'],
+                ":last_name" => $_POST['updateLastName'],
+                ":company_name" => $_POST['updateCompanyName'],
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+			executeBoundSQL("
+				UPDATE JobApplication J
+				SET J.Decision = 'Rejected'
+				WHERE J.CompanyName = :company_name
+				  	AND J.ApplicantID IN (
+						SELECT A.ApplicantID 
+						FROM Applicant A
+						WHERE A.FirstName = :first_name
+							  AND A.LastName = :last_name
+				)
+			", $alltuples);
+
+            $result = executePlainSQL("
+				SELECT A.FirstName, A.LastName, J.CompanyName, J.Decision
+				FROM JobApplication J, Applicant A
+				WHERE J.ApplicantID = A.ApplicantID
+				ORDER BY J.CompanyName, A.FirstName
+			");
+
+            echo "<br>Retrieved data from JobApplication and Applicant tables:<br>";
+            echo "<table>";
+            echo "
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Company Name</th>
+					<th>Decision</th>
+				</tr>
+			";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>" . 
+						"<td>" . $row[0] . "</td>" . 
+						"<td>" . $row[1] . "</td>" . 
+						"<td>" . $row[2] . "</td>" . 
+						"<td>" . $row[3] . "</td>" . 
+					"<tr>"; //or just use "echo $row[0]"
+            }
+
+            echo "</table>";
+            
+            OCICommit($db_conn);
+		}
+
+		function handleSelectionRequest() {
+            global $db_conn;
+
+			$result = executePlainSQL("
+				SELECT *
+				FROM InformationSession
+				WHERE SessionLocation = '" . $_GET['selectionLocation'] . "'
+			");
+
+            echo "<br>Retrieved data from InformationSession table:<br>";
+            echo "<table>";
+            echo "
+				<tr>
+					<th>Session ID</th>
+					<th>Location</th>
+					<th>Date</th>
+					<th>CompanyName</th>
+				</tr>
+			";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>" . 
+						"<td>" . $row[0] . "</td>" . 
+						"<td>" . $row[1] . "</td>" . 
+						"<td>" . $row[2] . "</td>" . 
+						"<td>" . $row[3] . "</td>" . 
+					"<tr>";
+            }
+
+            echo "</table>";
+            
+            OCICommit($db_conn);
+		}
+
+		function handleProjectionRequest() {
+            global $db_conn;
+
+			$result = executePlainSQL("
+				SELECT DISTINCT CompanyName
+				FROM Posting
+			");
+
+            echo "<br>Retrieved data from Posting table:<br>";
+            echo "<table>";
+            echo "
+				<tr>
+					<th>Company Name</th>
+				</tr>
+			";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>" . 
+						"<td>" . $row[0] . "</td>" . 
+					"<tr>";
+            }
+
+            echo "</table>";
+            
+            OCICommit($db_conn);
+		}
+
+		function handleJoinRequest() {
+            global $db_conn;
+
+			$result = executePlainSQL("
+				SELECT A.FirstName, A.LastName
+				FROM Applicant A, JobApplication J, Posting P
+				WHERE A.ApplicantID = J.ApplicantID 
+					AND J.PostingID = P.PostingID
+					AND P.PostingLocation = '" . $_GET['joinLocation'] . "'
+					AND J.Decision = 'Accepted'
+			");
+
+            echo "<br>Retrieved data from Join:<br>";
+            echo "<table>";
+            echo "
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+				</tr>
+			";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>" . 
+						"<td>" . $row[0] . "</td>" . 
+						"<td>" . $row[1] . "</td>" . 
+					"<tr>";
+            }
+
+            echo "</table>";
+            
+            OCICommit($db_conn);
+		}
+
+		function handleAggregationCountRequest() {
+            global $db_conn;
+
+			$result = executePlainSQL("
+				SELECT R.CompanyName, COUNT(*) AS NumRecruiters
+				FROM Recruiter R
+				GROUP BY R.CompanyName
+				ORDER BY NumRecruiters DESC
+			");
+
+            echo "<br>Retrieved aggregate data from Recruiters:<br>";
+            echo "<table>";
+            echo "
+				<tr>
+					<th>Company Name</th>
+					<th>Number of Recruiters</th>
+				</tr>
+			";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>" . 
+						"<td>" . $row[0] . "</td>" . 
+						"<td>" . $row[1] . "</td>" . 
+					"<tr>";
+            }
+
+            echo "</table>";
+            
+            OCICommit($db_conn);
+		}
+
+		function handleNestedAggregationRequest() {
+            global $db_conn;
+
+			$result = executePlainSQL("
+				WITH OfferCount AS (
+				    SELECT J.CompanyName, COUNT(*) AS NumOffers
+				    FROM JobApplication J, Posting P
+				    WHERE J.PostingID = P.PostingID 
+						AND (J.Decision = 'Offer' OR J.Decision = 'Accepted')
+				    GROUP BY J.CompanyName
+				)
+				SELECT OC.CompanyName, OC.NumOffers
+				FROM OfferCount OC
+				WHERE OC.NumOffers = (
+				    SELECT MAX(OC2.NumOffers)
+				    FROM OfferCount OC2
+				)
+			");
+
+            echo "<br>Retrieved nested aggregate data:<br>";
+            echo "<table>";
+            echo "
+				<tr>
+					<th>Company Name</th>
+					<th>Number of Offers</th>
+				</tr>
+			";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>" . 
+						"<td>" . $row[0] . "</td>" . 
+						"<td>" . $row[1] . "</td>" . 
+					"<tr>";
+            }
+
+            echo "</table>";
+            
+            OCICommit($db_conn);
+		}
+
+		function handleDivisionRequest() {
+            global $db_conn;
+
+			$result = executePlainSQL("
+				SELECT A.FirstName, A.LastName
+				FROM Applicant A
+				WHERE NOT EXISTS (
+					(
+						SELECT P.CompanyName 
+						FROM Posting P
+					) 
+					MINUS (
+						SELECT J.CompanyName
+						FROM JobApplication J
+						WHERE A.ApplicantID = J.ApplicantID
+					)
+				)
+			");
+
+            echo "<br>Retrieved division data:<br>";
+            echo "<table>";
+            echo "
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+				</tr>
+			";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>" . 
+						"<td>" . $row[0] . "</td>" . 
+						"<td>" . $row[1] . "</td>" . 
+					"<tr>";
+            }
+
+            echo "</table>";
+            
+            OCICommit($db_conn);
+		}
 
         function write_to_console($data) {
             $console = $data;
@@ -284,7 +607,7 @@
             
             echo "<script>console.log('Console: " . $console . "' );</script>";
         }
-        
+
 
         // HANDLE ALL POST ROUTES
 	    // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -315,10 +638,10 @@
                 } else if (array_key_exists('aggregationCountSubmit', $_GET)) {
                     handleAggregationCountRequest();
                 } else if (array_key_exists('nestedAggregationSubmit', $_GET)) {
-                    handleNestedAggregationSubmitRequest();
+                    handleNestedAggregationRequest();
                 } else if (array_key_exists('divisionSubmit', $_GET)) {
                     handleDivisionRequest();
-                }
+                } 
 
                 disconnectFromDB();
             }
@@ -326,7 +649,7 @@
 
 		if (isset($_POST['deleteSubmit']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
             handlePOSTRequest();
-        } else if (isset($_GET['selectQueryRequest'])) {
+        } else if (isset($_GET['selectionQueryRequest'])) {
             handleGETRequest();
         } else if (isset($_GET['projectionQueryRequest'])) {
             handleGETRequest();
@@ -338,7 +661,7 @@
             handleGETRequest();
         } else if (isset($_GET['divisionQueryRequest'])) {
             handleGETRequest();
-        }
+        } 
         
 		?>
 	</body>
