@@ -186,7 +186,7 @@ ALTER TABLE PhoneScreen ADD (
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES JobApplication (ApplicantID, PostingID)
         ON DELETE CASCADE,
-  CONSTRAINT online_assessment_fk_interview 
+  CONSTRAINT phone_screen_fk_interview 
     FOREIGN KEY (InterviewID) 
       REFERENCES Interview (InterviewID)
         ON DELETE CASCADE
@@ -197,7 +197,7 @@ ALTER TABLE OnsiteInterview ADD (
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES JobApplication (ApplicantID, PostingID)
         ON DELETE CASCADE,
-  CONSTRAINT online_assessment_fk_interview 
+  CONSTRAINT onsite_interview_fk_interview 
     FOREIGN KEY (InterviewID) 
       REFERENCES Interview (InterviewID)
         ON DELETE CASCADE
@@ -208,7 +208,7 @@ ALTER TABLE TeamMatching ADD (
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES JobApplication (ApplicantID, PostingID)
         ON DELETE CASCADE,
-  CONSTRAINT online_assessment_fk_interview 
+  CONSTRAINT team_matching_fk_interview 
     FOREIGN KEY (InterviewID) 
       REFERENCES Interview (InterviewID)
         ON DELETE CASCADE
