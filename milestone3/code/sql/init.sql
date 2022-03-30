@@ -245,11 +245,11 @@ INTO Company VALUES ('Google', 'Heather', 'Vancouver', 'BC', 'Canada', 'V6H7A6')
 INTO Company VALUES ('Asana', 'Victoria', 'Vancouver', 'BC', 'Canada', 'V2H7U6')
 INTO Company VALUES ('Citadel', 'Queen', 'Vancouver', 'BC', 'Canada', 'V1N4B6')
 INTO Company VALUES ('Rippling', 'Oak', 'Vancouver', 'BC', 'Canada', 'V7A5A6')
-INTO Posting VALUES (1, 'Internship', 10, TO_DATE('10/22/2022', 'DD/MM/YYYY'), 'janitor', 'company bathroom', 'Asana')
-INTO Posting VALUES (2, 'Internship', 50, TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'secretary', 'office', 'Google')
-INTO Posting VALUES (3, 'FullTime', 100, TO_DATE('12/4/2022', 'DD/MM/YYYY'), 'sales', 'office', 'Amazon')
-INTO Posting VALUES (4, 'FullTime', 500, TO_DATE('10/30/2022', 'DD/MM/YYYY'), 'worker', 'warehouse', 'Amazon')
-INTO Posting VALUES (5, 'Internship', 30, TO_DATE('2/28/2023', 'DD/MM/YYYY'), 'sorting documents', 'office', 'Google')
+INTO Posting VALUES (1, 'Internship', 10, TO_DATE('10/22/2022', 'MM/DD/YYYY'), 'janitor', 'company bathroom', 'Asana')
+INTO Posting VALUES (2, 'Internship', 50, TO_DATE('5/1/2022', 'MM/DD/YYYY'), 'secretary', 'office', 'Google')
+INTO Posting VALUES (3, 'FullTime', 100, TO_DATE('12/4/2022', 'MM/DD/YYYY'), 'sales', 'office', 'Amazon')
+INTO Posting VALUES (4, 'FullTime', 500, TO_DATE('10/30/2022', 'MM/DD/YYYY'), 'worker', 'warehouse', 'Amazon')
+INTO Posting VALUES (5, 'Internship', 30, TO_DATE('2/28/2023', 'MM/DD/YYYY'), 'sorting documents', 'office', 'Google')
 INTO Recruiter VALUES (1, 'Kevin', 'Durant', 'Asana')
 INTO Recruiter VALUES (2, 'Kyrie', 'Irving', 'Google')
 INTO Recruiter VALUES (3, 'Jeff', 'Bezos', 'Amazon')
@@ -265,51 +265,51 @@ INTO Application VALUES (2, 'ethanlin.com/coverletter.pdf', 'ethanlin.com/resume
 INTO Application VALUES (3, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 3, 3, 'Amazon')
 INTO Application VALUES (4, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 2, 2, 'Google')
 INTO Application VALUES (5, 'antonchen.com/coverletter.pdf', 'antonchen.com/resume.pdf', 'Rejected', 3, 1, 1, 'Asana')
-INTO InformationSession VALUES (1, 'zoom', TO_DATE('5/1/2022', 'DD/MM/YYYY'), 'Asana')
-INTO InformationSession VALUES (2, 'zoom', TO_DATE('5/10/2022', 'DD/MM/YYYY'), 'Google')
-INTO InformationSession VALUES (3, 'zoom', TO_DATE('10/10/2022', 'DD/MM/YYYY'), 'Amazon')
-INTO InformationSession VALUES (4, 'zoom', TO_DATE('11/11/2022', 'DD/MM/YYYY'), 'Citadel')
-INTO InformationSession VALUES (5, 'zoom', TO_DATE('12/12/2022', 'DD/MM/YYYY'), 'Rippling')
+INTO InformationSession VALUES (1, 'zoom', TO_DATE('5/1/2022', 'MM/DD/YYYY'), 'Asana')
+INTO InformationSession VALUES (2, 'zoom', TO_DATE('5/10/2022', 'MM/DD/YYYY'), 'Google')
+INTO InformationSession VALUES (3, 'zoom', TO_DATE('10/10/2022', 'MM/DD/YYYY'), 'Amazon')
+INTO InformationSession VALUES (4, 'zoom', TO_DATE('11/11/2022', 'MM/DD/YYYY'), 'Citadel')
+INTO InformationSession VALUES (5, 'zoom', TO_DATE('12/12/2022', 'MM/DD/YYYY'), 'Rippling')
 INTO OnlineAssessment VALUES 
-(1, 'Intern', 70, 'Easy', 4, 800, TO_DATE('5/2/2022', 'DD/MM/YYYY'), TO_DATE('5/9/2022', 'DD/MM/YYYY'), 1, 1)
+(1, 'Intern', 70, 'Easy', 4, 800, TO_DATE('5/2/2022', 'MM/DD/YYYY'), TO_DATE('5/9/2022', 'MM/DD/YYYY'), 1, 1)
 INTO OnlineAssessment VALUES 
-(2, 'Intern', 80, 'Medium', 4, 800, TO_DATE('3/4/2022', 'DD/MM/YYYY'), TO_DATE('5/1/2022', 'DD/MM/YYYY'), 2, 2)
+(2, 'Intern', 80, 'Medium', 4, 800, TO_DATE('3/4/2022', 'MM/DD/YYYY'), TO_DATE('5/1/2022', 'MM/DD/YYYY'), 2, 2)
 INTO OnlineAssessment VALUES 
-(3, 'Intern', 90, 'Hard', 4, 800, TO_DATE('5/6/2022', 'DD/MM/YYYY'), TO_DATE('5/19/2022', 'DD/MM/YYYY'), 3, 3)
+(3, 'Intern', 90, 'Hard', 4, 800, TO_DATE('5/6/2022', 'MM/DD/YYYY'), TO_DATE('5/19/2022', 'MM/DD/YYYY'), 3, 3)
 INTO OnlineAssessment VALUES 
-(4, 'Intern', 70, 'Medium', 4, 800, TO_DATE('5/7/2022', 'DD/MM/YYYY'), TO_DATE('5/9/2022', 'DD/MM/YYYY'), 3, 2)
+(4, 'Intern', 70, 'Medium', 4, 800, TO_DATE('5/7/2022', 'MM/DD/YYYY'), TO_DATE('5/9/2022', 'MM/DD/YYYY'), 3, 2)
 INTO OnlineAssessment VALUES 
-(5, 'Intern', 60, 'Easy', 4, 800, TO_DATE('5/8/2022', 'DD/MM/YYYY'), TO_DATE('6/9/2022', 'DD/MM/YYYY'), 3, 1)
+(5, 'Intern', 60, 'Easy', 4, 800, TO_DATE('5/8/2022', 'MM/DD/YYYY'), TO_DATE('6/9/2022', 'MM/DD/YYYY'), 3, 1)
 INTO PhoneScreen VALUES 
-(6, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 1, 1)
+(6, TO_DATE('5/1/2022', 'MM/DD/YYYY'), TO_DATE('10/30/2022', 'MM/DD/YYYY'), 1, 1)
 INTO PhoneScreen VALUES 
-(7, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('11/20/2022', 'DD/MM/YYYY'), 2, 2)
+(7, TO_DATE('6/2/2022', 'MM/DD/YYYY'), TO_DATE('11/20/2022', 'MM/DD/YYYY'), 2, 2)
 INTO PhoneScreen VALUES 
-(8, TO_DATE('7/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 3)
+(8, TO_DATE('7/2/2022', 'MM/DD/YYYY'), TO_DATE('8/10/2022', 'MM/DD/YYYY'), 3, 3)
 INTO PhoneScreen VALUES 
-(9, TO_DATE('8/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 1)
+(9, TO_DATE('8/2/2022', 'MM/DD/YYYY'), TO_DATE('8/10/2022', 'MM/DD/YYYY'), 3, 1)
 INTO PhoneScreen VALUES 
-(10, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('6/1/2022', 'DD/MM/YYYY'), 3, 2)
+(10, TO_DATE('6/2/2022', 'MM/DD/YYYY'), TO_DATE('6/1/2022', 'MM/DD/YYYY'), 3, 2)
 INTO OnsiteInterview VALUES 
-(11, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 1, 1)
+(11, TO_DATE('5/1/2022', 'MM/DD/YYYY'), TO_DATE('10/30/2022', 'MM/DD/YYYY'), 1, 1)
 INTO OnsiteInterview VALUES 
-(12, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('11/20/2022', 'DD/MM/YYYY'), 2, 2)
+(12, TO_DATE('6/2/2022', 'MM/DD/YYYY'), TO_DATE('11/20/2022', 'MM/DD/YYYY'), 2, 2)
 INTO OnsiteInterview VALUES 
-(13, TO_DATE('7/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 3)
+(13, TO_DATE('7/2/2022', 'MM/DD/YYYY'), TO_DATE('8/10/2022', 'MM/DD/YYYY'), 3, 3)
 INTO OnsiteInterview VALUES 
-(14, TO_DATE('8/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 1)
+(14, TO_DATE('8/2/2022', 'MM/DD/YYYY'), TO_DATE('8/10/2022', 'MM/DD/YYYY'), 3, 1)
 INTO OnsiteInterview VALUES 
-(15, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('6/1/2022', 'DD/MM/YYYY'), 3, 2)
+(15, TO_DATE('6/2/2022', 'MM/DD/YYYY'), TO_DATE('6/1/2022', 'MM/DD/YYYY'), 3, 2)
 INTO TeamMatching VALUES 
-(16, TO_DATE('5/1/2022', 'DD/MM/YYYY'), TO_DATE('10/30/2022', 'DD/MM/YYYY'), 1, 1)
+(16, TO_DATE('5/1/2022', 'MM/DD/YYYY'), TO_DATE('10/30/2022', 'MM/DD/YYYY'), 1, 1)
 INTO TeamMatching VALUES 
-(17, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('11/20/2022', 'DD/MM/YYYY'), 2, 2)
+(17, TO_DATE('6/2/2022', 'MM/DD/YYYY'), TO_DATE('11/20/2022', 'MM/DD/YYYY'), 2, 2)
 INTO TeamMatching VALUES 
-(18, TO_DATE('7/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 3)
+(18, TO_DATE('7/2/2022', 'MM/DD/YYYY'), TO_DATE('8/10/2022', 'MM/DD/YYYY'), 3, 3)
 INTO TeamMatching VALUES 
-(19, TO_DATE('8/2/2022', 'DD/MM/YYYY'), TO_DATE('8/10/2022', 'DD/MM/YYYY'), 3, 1)
+(19, TO_DATE('8/2/2022', 'MM/DD/YYYY'), TO_DATE('8/10/2022', 'MM/DD/YYYY'), 3, 1)
 INTO TeamMatching VALUES 
-(20, TO_DATE('6/2/2022', 'DD/MM/YYYY'), TO_DATE('6/1/2022', 'DD/MM/YYYY'), 3, 2)
+(20, TO_DATE('6/2/2022', 'MM/DD/YYYY'), TO_DATE('6/1/2022', 'MM/DD/YYYY'), 3, 2)
 INTO Participate VALUES (1, 1, 1)
 INTO Participate VALUES (2, 3, 2)
 INTO Participate VALUES (3, 3, 3)
