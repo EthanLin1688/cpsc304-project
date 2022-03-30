@@ -25,7 +25,7 @@ CREATE TABLE Posting (
   Salary             int,
   StartDate          date,
   JobDescription     varchar(1000),
-  Location           varchar(100),
+  PostingLocation           varchar(100),
   CompanyName        varchar(100) NOT NULL,
   CONSTRAINT posting_pk PRIMARY KEY (PostingID)
 );
@@ -106,8 +106,8 @@ CREATE TABLE Recruiter (
 
 CREATE TABLE InformationSession (
   SessionID          int,
-  Location           varchar(100),
-  DateTime           date,
+  SessionLocation    varchar(100),
+  SessionDate        date,
   CompanyName        varchar(100) NOT NULL,
   CONSTRAINT information_session_pk PRIMARY KEY (SessionID)
 );
