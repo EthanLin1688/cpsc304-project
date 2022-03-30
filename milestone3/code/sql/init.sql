@@ -14,7 +14,7 @@ CREATE TABLE JobApplication (
   Decision           varchar(20),
   ApplicantID        int,
   PostingID          int,
-  RecruiterID        int DEFAULT NULL,
+  RecruiterID        int,
   CompanyName        varchar(100) NOT NULL,
   CONSTRAINT application_pk PRIMARY KEY (ApplicantID, PostingID)
 );
