@@ -158,8 +158,8 @@ ALTER TABLE Posting ADD (
   CONSTRAINT posting_fk_company
     FOREIGN KEY (CompanyName) 
       REFERENCES Company (CompanyName) 
-        ON DELETE CASCADE;
-)
+        ON DELETE CASCADE
+);
 
 ALTER TABLE Interviewer ADD (
   CONSTRAINT interviewer_fk_company
