@@ -38,8 +38,8 @@ WHERE I.Location IS :location;
 
 -- PROJECTION QUERY
 -- "Find the names of all companies which have internships available."
-SELECT DISTINCT I.CompanyName
-FROM Internship I;
+SELECT DISTINCT P.Posting
+FROM Posting P;
 
 -- JOIN QUERY
 -- "Select all applicants who will join a position in a given location."
