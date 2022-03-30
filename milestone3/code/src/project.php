@@ -25,14 +25,15 @@
         <h1> CPSC 304 Job Board Database Demo </h1>
 
         <h2>Insertion</h2>
-        <p>Insert a new job internship job posting</p>
+        <p>Insert a new posting</p>
         <form method="POST" action="project.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
             Posting ID: <input type="text" name="postingID"> <br /><br />
+            Posting Type: <input type="text" name="postingName"> <br /><br />
             Salary: <input type="text" name="salary"> <br /><br />
-            Start Date (dd-mm-yy): <input type="text" name="startDate"> <br /><br />
+            Start Date (MM/DD/YYYY): <input type="text" name="startDate"> <br /><br />
             Job Description: <input type="text" name="jobDescription"> <br /><br />
-            Location : <input type="text" name="location"> <br /><br />
+            Posting Location : <input type="text" name="postingLocation"> <br /><br />
             Company Name: <input type="text" name="companyName"> <br /><br />
             <input type="submit" value="Insert" name="insertSubmit"></p>
         </form>
@@ -228,22 +229,62 @@
             OCICommit($db_conn);
         }
 
+        function handleSelectionRequest() {
+            global $db_conn;
+
+            $old_name = $_POST['oldName'];
+            $new_name = $_POST['newName'];
+
+            // you need the wrap the old name and new name values with single quotations
+            executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
+            OCICommit($db_conn);
+        }
+        
         function handleInsertRequest() {
             global $db_conn;
 
             //Getting the values from user and insert data into the table
             $tuple = array (
-                ":bind1" => $_POST['insNo'],
-                ":bind2" => $_POST['insName']
+                ":bind1" => $_POST['postingID'],
+                ":bind2" => $_POST['postingType'],
+                ":bind3" => $_POST['salary'],
+                ":bind4" => strtotime($_POST['startDate']),
+                ":bind5" => $_POST['jobDescription'],
+                ":bind6" => $_POST['postingLocation'],
+                ":bind7" => $_POST['companyName'],
             );
 
             $alltuples = array (
                 $tuple
             );
 
-            executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
+            write_to_console($alltuples);
+
+            executeBoundSQL("INSERT into Posting (PostingID, PostingType, Salary, StartDate, JobDescription, PostingLocation, CompanyName) values (:bind1, :bind2, :bind3, :bind4, :bind5, :bind6, :bind7)", $alltuples);
+            
+            $result = executePlainSQL("SELECT PostingID, PostingType, Salary, StartDate, JobDescription, PostingLocation, CompanyName FROM Posting");
+
+            echo "<br>Retrieved data from Posting table:<br>";
+            echo "<table>";
+            echo "<tr><th>Posting ID</th><th>Posting Type</th><th>Salary</th><th>Start Date</th><th>Job Description</th><th>Posting Location</th><th>Company Name</th></tr>";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr><td>" . $row[0] . "</td><td>" . $row[1] . "</td><td>" . $row[2] . "</td><td>" . $row[3] . "</td><td>" . $row[4] . "</td><td>" . $row[5] . "</td><td>" . $row[6] . "</td></tr>"; //or just use "echo $row[0]"
+            }
+
+            echo "</table>";
+            
             OCICommit($db_conn);
         }
+
+        function write_to_console($data) {
+            $console = $data;
+            if (is_array($console))
+            $console = implode(',', $console);
+            
+            echo "<script>console.log('Console: " . $console . "' );</script>";
+        }
+        
 
         // HANDLE ALL POST ROUTES
 	    // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
