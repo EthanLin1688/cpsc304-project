@@ -177,7 +177,7 @@ ALTER TABLE OnlineAssessment ADD (
         ON DELETE CASCADE,
   CONSTRAINT online_assessment_fk_interview 
     FOREIGN KEY (InterviewID) 
-      REFERENCES Interview (Interview) 
+      REFERENCES Interview (InterviewID)
         ON DELETE CASCADE
 );
 
@@ -188,7 +188,7 @@ ALTER TABLE PhoneScreen ADD (
         ON DELETE CASCADE,
   CONSTRAINT online_assessment_fk_interview 
     FOREIGN KEY (InterviewID) 
-      REFERENCES Interview (Interview) 
+      REFERENCES Interview (InterviewID)
         ON DELETE CASCADE
 );
 
@@ -199,7 +199,7 @@ ALTER TABLE OnsiteInterview ADD (
         ON DELETE CASCADE,
   CONSTRAINT online_assessment_fk_interview 
     FOREIGN KEY (InterviewID) 
-      REFERENCES Interview (Interview) 
+      REFERENCES Interview (InterviewID)
         ON DELETE CASCADE
 );
 
@@ -210,7 +210,7 @@ ALTER TABLE TeamMatching ADD (
         ON DELETE CASCADE,
   CONSTRAINT online_assessment_fk_interview 
     FOREIGN KEY (InterviewID) 
-      REFERENCES Interview (Interview) 
+      REFERENCES Interview (InterviewID)
         ON DELETE CASCADE
 );
 
