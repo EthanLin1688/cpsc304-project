@@ -1,19 +1,5 @@
 -- Create table statements
 
-DROP TABLE Applicant;
-DROP TABLE Application;
-DROP TABLE Posting;
-DROP TABLE Company;
-DROP TABLE Interviewer;
-DROP TABLE Host;
-DROP TABLE OnlineAssessment;
-DROP TABLE PhoneScreen;
-DROP TABLE OnsiteInterview;
-DROP TABLE TeamMatching;
-DROP TABLE Recruiter;
-DROP TABLE InformationSession;
-DROP TABLE Participate;
-
 CREATE TABLE Applicant (
   ApplicantID        int,
   FirstName          varchar(50),
@@ -220,7 +206,6 @@ ALTER TABLE InformationSession ADD (
       REFERENCES Company (CompanyName) 
         ON DELETE CASCADE
 );
-
 
 ALTER TABLE Participate ADD (
   CONSTRAINT participates_fk_application
