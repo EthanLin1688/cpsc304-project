@@ -4,7 +4,7 @@ CREATE TABLE Applicant (
   ApplicantID        int,
   FirstName          varchar(50),
   LastName           varchar(50),
-  PRIMARY KEY (ApplicantID)     
+  CONSTRAINT applicant_pk PRIMARY KEY (ApplicantID)     
 );
 
 CREATE TABLE Application (
@@ -16,7 +16,7 @@ CREATE TABLE Application (
   PostingID          int,
   RecruiterID        int DEFAULT NULL,
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (ApplicantID, PostingID)
+  CONSTRAINT application_pk PRIMARY KEY (ApplicantID, PostingID)
 );
 
 CREATE TABLE Posting (
@@ -27,7 +27,7 @@ CREATE TABLE Posting (
   JobDescription     varchar(1000),
   Location           varchar(100),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (PostingID)
+  CONSTRAINT posting_pk PRIMARY KEY (PostingID)
 );
 
 CREATE TABLE Company (
@@ -37,7 +37,7 @@ CREATE TABLE Company (
   StateProvince      varchar(100),
   Country            varchar(100),
   PostalCode         varchar(50),
-  PRIMARY KEY (CompanyName)
+  CONSTRAINT company_pk PRIMARY KEY (CompanyName)
 );
 
 CREATE TABLE Interviewer (
@@ -46,13 +46,13 @@ CREATE TABLE Interviewer (
   LastName           varchar(50),
   Position           varchar(50),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (InterviewerID)
+  CONSTRAINT interviewer_pk PRIMARY KEY (InterviewerID)
 );
 
 CREATE TABLE Host (
   InterviewID         int,
   InterviewerID       int DEFAULT NULL,
-  PRIMARY KEY (InterviewID, InterviewerID)
+  CONSTRAINT host_pk PRIMARY KEY (InterviewID, InterviewerID)
 );
 
 CREATE TABLE OnlineAssessment (
@@ -66,7 +66,7 @@ CREATE TABLE OnlineAssessment (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID)
+  CONSTRAINT online_assessment_pk PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE PhoneScreen (
@@ -75,7 +75,7 @@ CREATE TABLE PhoneScreen (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID)
+  CONSTRAINT phone_screen_pk PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE OnsiteInterview (
@@ -84,7 +84,7 @@ CREATE TABLE OnsiteInterview (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID)
+  CONSTRAINT onsite_interview_pk PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE TeamMatching (
@@ -93,7 +93,7 @@ CREATE TABLE TeamMatching (
   EndDateTime        date,
   ApplicantID        int NOT NULL,
   PostingID          int NOT NULL,
-  PRIMARY KEY (InterviewID)
+  CONSTRAINT team_matching_pk PRIMARY KEY (InterviewID)
 );
 
 CREATE TABLE Recruiter (
@@ -101,7 +101,7 @@ CREATE TABLE Recruiter (
   FirstName          varchar(50),
   LastName           varchar(50),
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (RecruiterID)
+  CONSTRAINT recruiter_pk PRIMARY KEY (RecruiterID)
 );
 
 CREATE TABLE InformationSession (
@@ -109,14 +109,14 @@ CREATE TABLE InformationSession (
   Location           varchar(100),
   DateTime           date,
   CompanyName        varchar(100) NOT NULL,
-  PRIMARY KEY (SessionID)
+  CONSTRAINT information_session_pk PRIMARY KEY (SessionID)
 );
 
 CREATE TABLE Participate (
   ApplicantID        int,
   PostingID          int,
   SessionID          int,
-  PRIMARY KEY (ApplicantID, PostingID, SessionID)
+  CONSTRAINT participate_pk PRIMARY KEY (ApplicantID, PostingID, SessionID)
 );
 
 -- Add foreign keys
