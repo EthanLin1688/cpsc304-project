@@ -55,6 +55,11 @@ CREATE TABLE Host (
   CONSTRAINT host_pk PRIMARY KEY (InterviewID, InterviewerID)
 );
 
+CREATE TABLE Interview (
+  InterviewID        int,
+  CONSTRAINT interview_pk PRIMARY KEY (InterviewID)
+);
+
 CREATE TABLE OnlineAssessment (
   InterviewID        int,
   PositionType       varchar(50),
@@ -169,6 +174,10 @@ ALTER TABLE OnlineAssessment ADD (
   CONSTRAINT online_assessment_fk_application 
     FOREIGN KEY (ApplicantID, PostingID) 
       REFERENCES JobApplication (ApplicantID, PostingID) 
+        ON DELETE CASCADE,
+  CONSTRAINT online_assessment_fk_interview 
+    FOREIGN KEY (InterviewID) 
+      REFERENCES Interview (Interview) 
         ON DELETE CASCADE
 );
 
@@ -176,6 +185,10 @@ ALTER TABLE PhoneScreen ADD (
   CONSTRAINT phone_screen_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES JobApplication (ApplicantID, PostingID)
+        ON DELETE CASCADE,
+  CONSTRAINT online_assessment_fk_interview 
+    FOREIGN KEY (InterviewID) 
+      REFERENCES Interview (Interview) 
         ON DELETE CASCADE
 );
 
@@ -183,6 +196,10 @@ ALTER TABLE OnsiteInterview ADD (
   CONSTRAINT onsite_interview_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES JobApplication (ApplicantID, PostingID)
+        ON DELETE CASCADE,
+  CONSTRAINT online_assessment_fk_interview 
+    FOREIGN KEY (InterviewID) 
+      REFERENCES Interview (Interview) 
         ON DELETE CASCADE
 );
 
@@ -190,6 +207,10 @@ ALTER TABLE TeamMatching ADD (
   CONSTRAINT team_matching_fk_application
     FOREIGN KEY (ApplicantID, PostingID)
       REFERENCES JobApplication (ApplicantID, PostingID)
+        ON DELETE CASCADE,
+  CONSTRAINT online_assessment_fk_interview 
+    FOREIGN KEY (InterviewID) 
+      REFERENCES Interview (Interview) 
         ON DELETE CASCADE
 );
 
