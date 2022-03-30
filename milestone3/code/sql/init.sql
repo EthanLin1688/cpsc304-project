@@ -238,7 +238,7 @@ INTO Posting VALUES (5, 'Internship', 30, TO_DATE('2/28/2023', 'MM/DD/YYYY'), 's
 INTO Recruiter VALUES (1, 'Kevin', 'Durant', 'Asana')
 INTO Recruiter VALUES (2, 'Kyrie', 'Irving', 'Google')
 INTO Recruiter VALUES (3, 'Jeff', 'Bezos', 'Amazon')
-INTO Recruiter VALUES (4, 'Lil', 'Pump', 'Housekeeper')
+INTO Recruiter VALUES (4, 'Lil', 'Pump', 'Rippling')
 INTO Recruiter VALUES (5, 'Kanye', 'West', 'Google')
 INTO Interviewer VALUES (1, 'James', 'Harden', 'Senior Engineer', 'Asana')
 INTO Interviewer VALUES (2, 'LeBron', 'James', 'Junior Engineer', 'Google')
