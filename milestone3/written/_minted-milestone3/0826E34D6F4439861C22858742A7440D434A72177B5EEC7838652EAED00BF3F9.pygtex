@@ -1,0 +1,91 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} INSERT}
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} \PYGZdq{}Insert a new job posting.\PYGZdq{}}
+\PYG{k}{INSERT} 
+\PYG{k}{INTO} \PYG{n}{Posting} 
+\PYG{k}{VALUES} \PYG{p}{(}
+  \PYG{p}{:}\PYG{n}{posting\PYGZus{}id}\PYG{p}{,} 
+  \PYG{p}{:}\PYG{n}{posting\PYGZus{}type}\PYG{p}{,}
+  \PYG{p}{:}\PYG{n}{salary}\PYG{p}{,} 
+  \PYG{p}{:}\PYG{n}{start\PYGZus{}date}\PYG{p}{,} 
+  \PYG{p}{:}\PYG{n}{job\PYGZus{}description}\PYG{p}{,} 
+  \PYG{p}{:}\PYG{k}{location}\PYG{p}{,} 
+  \PYG{p}{:}\PYG{n}{company\PYGZus{}name}
+\PYG{p}{);}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} DELETE}
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} \PYGZdq{}Remove a company from the database.\PYGZdq{}}
+\PYG{k}{DELETE} 
+\PYG{k}{FROM} \PYG{n}{Company} \PYG{k}{C}
+\PYG{k}{WHERE} \PYG{k}{C}\PYG{p}{.}\PYG{n}{CompanyName} \PYG{o}{=} \PYG{p}{:}\PYG{n}{company\PYGZus{}name}\PYG{p}{;}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} UPDATE}
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} \PYGZdq{}Reject an applicant from all applied positions at a company.\PYGZdq{}}
+\PYG{k}{UPDATE} \PYG{n}{JobApplication} \PYG{n}{J}
+\PYG{k}{SET} \PYG{n}{J}\PYG{p}{.}\PYG{n}{Decision} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Rejected\PYGZsq{}}
+\PYG{k}{WHERE} \PYG{n}{J}\PYG{p}{.}\PYG{n}{CompanyName} \PYG{o}{=} \PYG{p}{:}\PYG{n}{company\PYGZus{}name}
+  \PYG{k}{AND} \PYG{n}{J}\PYG{p}{.}\PYG{n}{ApplicantID} \PYG{k}{IN} \PYG{p}{(}
+    \PYG{k}{SELECT} \PYG{n}{A}\PYG{p}{.}\PYG{n}{ApplicantID} 
+    \PYG{k}{FROM} \PYG{n}{Applicant} \PYG{n}{A}
+    \PYG{k}{WHERE} \PYG{n}{A}\PYG{p}{.}\PYG{n}{FirstName} \PYG{o}{=} \PYG{p}{:}\PYG{n}{first\PYGZus{}name}
+      \PYG{k}{AND} \PYG{n}{A}\PYG{p}{.}\PYG{n}{LastName} \PYG{o}{=} \PYG{p}{:}\PYG{n}{last\PYGZus{}name}
+\PYG{p}{);}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} SELECTION}
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} \PYGZdq{}Find all the information sessions at specified location.\PYGZdq{}}
+\PYG{k}{SELECT} \PYG{o}{*}
+\PYG{k}{FROM} \PYG{n}{InformationSession} \PYG{n}{I}
+\PYG{k}{WHERE} \PYG{n}{I}\PYG{p}{.}\PYG{k}{Location} \PYG{k}{IS} \PYG{p}{:}\PYG{k}{location}\PYG{p}{;}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} PROJECTION QUERY}
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} \PYGZdq{}Find the names of all companies which have internships available.\PYGZdq{}}
+\PYG{k}{SELECT} \PYG{k}{DISTINCT} \PYG{n}{P}\PYG{p}{.}\PYG{n}{Posting}
+\PYG{k}{FROM} \PYG{n}{Posting} \PYG{n}{P}\PYG{p}{;}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} JOIN QUERY}
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} \PYGZdq{}Select all applicants who will join a position in a given location.\PYGZdq{}}
+\PYG{k}{SELECT} \PYG{n}{A}\PYG{p}{.}\PYG{n}{FirstName}\PYG{p}{,} \PYG{n}{A}\PYG{p}{.}\PYG{n}{LastName}
+\PYG{k}{FROM} \PYG{n}{Applicant} \PYG{n}{A}\PYG{p}{,} \PYG{n}{JobApplication} \PYG{n}{J}\PYG{p}{,} \PYG{n}{Posting} \PYG{n}{P}
+\PYG{k}{WHERE} \PYG{n}{A}\PYG{p}{.}\PYG{n}{ApplicantID} \PYG{o}{=} \PYG{n}{J}\PYG{p}{.}\PYG{n}{ApplicantID} 
+  \PYG{k}{AND} \PYG{n}{J}\PYG{p}{.}\PYG{n}{PostingID} \PYG{o}{=} \PYG{n}{P}\PYG{p}{.}\PYG{n}{PostingID}
+  \PYG{k}{AND} \PYG{n}{P}\PYG{p}{.}\PYG{n}{PostingLocation} \PYG{o}{=} \PYG{p}{:}\PYG{k}{location}
+  \PYG{k}{AND} \PYG{n}{J}\PYG{p}{.}\PYG{n}{Decision} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Accepted\PYGZsq{}}\PYG{p}{;}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} AGGREGATION}
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} \PYGZdq{}Find the number of recruiters for each company.\PYGZdq{}}
+\PYG{k}{SELECT} \PYG{n}{R}\PYG{p}{.}\PYG{n}{CompanyName}\PYG{p}{,} \PYG{k}{COUNT}\PYG{p}{(}\PYG{o}{*}\PYG{p}{)} \PYG{k}{AS} \PYG{n}{NumRecruiters}
+\PYG{k}{FROM} \PYG{n}{Recruiter} \PYG{n}{R}
+\PYG{k}{GROUP} \PYG{k}{BY} \PYG{n}{R}\PYG{p}{.}\PYG{n}{CompanyName}
+\PYG{k}{ORDER} \PYG{k}{BY} \PYG{n}{NumRecruiters} \PYG{k}{DESC}\PYG{p}{;}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} NESTED AGGREGATION}
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} \PYGZdq{}Find the company who has given out the most offers.\PYGZdq{}}
+\PYG{k}{WITH} \PYG{n}{OfferCount} \PYG{k}{AS} \PYG{p}{(}
+  \PYG{k}{SELECT} \PYG{n}{J}\PYG{p}{.}\PYG{n}{CompanyName}\PYG{p}{,} \PYG{k}{COUNT}\PYG{p}{(}\PYG{o}{*}\PYG{p}{)} \PYG{k}{AS} \PYG{n}{NumOffers}
+  \PYG{k}{FROM} \PYG{n}{JobApplication} \PYG{n}{J}\PYG{p}{,} \PYG{n}{Posting} \PYG{n}{P}
+  \PYG{k}{WHERE} \PYG{n}{J}\PYG{p}{.}\PYG{n}{PostingID} \PYG{o}{=} \PYG{n}{P}\PYG{p}{.}\PYG{n}{PostingID} 
+    \PYG{k}{AND} \PYG{p}{(}\PYG{n}{J}\PYG{p}{.}\PYG{n}{Decision} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Offer\PYGZsq{}} \PYG{k}{OR} \PYG{n}{J}\PYG{p}{.}\PYG{n}{Decision} \PYG{o}{=} \PYG{l+s+s1}{\PYGZsq{}Accepted\PYGZsq{}}\PYG{p}{)}
+  \PYG{k}{GROUP} \PYG{k}{BY} \PYG{n}{J}\PYG{p}{.}\PYG{n}{CompanyName}
+\PYG{p}{)}
+\PYG{k}{SELECT} \PYG{n}{OC}\PYG{p}{.}\PYG{n}{CompanyName}\PYG{p}{,} \PYG{n}{OC}\PYG{p}{.}\PYG{n}{NumOffers}
+\PYG{k}{FROM} \PYG{n}{OfferCount} \PYG{n}{OC}
+\PYG{k}{WHERE} \PYG{n}{OC}\PYG{p}{.}\PYG{n}{NumOffers} \PYG{o}{=} \PYG{p}{(}
+  \PYG{k}{SELECT} \PYG{k}{MAX}\PYG{p}{(}\PYG{n}{OC2}\PYG{p}{.}\PYG{n}{NumOffers}\PYG{p}{)}
+  \PYG{k}{FROM} \PYG{n}{OfferCount} \PYG{n}{OC2}
+\PYG{p}{);}
+
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} DIVISION}
+\PYG{c+c1}{\PYGZhy{}\PYGZhy{} \PYGZdq{}Find all the applicants who have applied to every company that has postings.\PYGZdq{}}
+\PYG{k}{SELECT} \PYG{n}{A}\PYG{p}{.}\PYG{n}{FirstName}\PYG{p}{,} \PYG{n}{A}\PYG{p}{.}\PYG{n}{LastName}
+\PYG{k}{FROM} \PYG{n}{Applicant} \PYG{n}{A}
+\PYG{k}{WHERE} \PYG{k}{NOT} \PYG{k}{EXISTS} \PYG{p}{(}
+  \PYG{p}{(}
+    \PYG{k}{SELECT} \PYG{n}{P}\PYG{p}{.}\PYG{n}{CompanyName} 
+    \PYG{k}{FROM} \PYG{n}{Posting} \PYG{n}{P}
+  \PYG{p}{)} \PYG{n}{MINUS} \PYG{p}{(}
+    \PYG{k}{SELECT} \PYG{n}{J}\PYG{p}{.}\PYG{n}{CompanyName}
+    \PYG{k}{FROM} \PYG{n}{JobApplication} \PYG{n}{J}
+    \PYG{k}{WHERE} \PYG{n}{A}\PYG{p}{.}\PYG{n}{ApplicantID} \PYG{o}{=} \PYG{n}{J}\PYG{p}{.}\PYG{n}{ApplicantID}
+  \PYG{p}{)}
+\PYG{p}{);}
+\end{Verbatim}

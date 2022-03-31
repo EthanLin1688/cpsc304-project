@@ -1,0 +1,39 @@
+\section{Project Description}
+
+\subsection{What is this project? What has this project accomplished?}
+
+Our final project is a web application which 
+models a functioning job board, 
+containing all the basic components
+such as applicants applying to job postings, 
+companies posting jobs,
+scheduling interviews for applications, 
+and finally decisions from both applicants and companies regarding the application. 
+A job posting can either be an internship or a full time job. 
+Interviews can be one of online assessment, phone screen, onsite interview, or team matching. 
+We also included an information session functionality so applicants can get to know about their jobs and companies more. 
+
+To start, the project successfully allows for 
+companies to add their own postings to the website,
+as demonstrated by the insertion query
+screenshotted in section 6.
+Additionally,
+the project allows for companies to make decisions
+on accepting or rejecting candidates,
+with the update query.
+Finally, statistics regarding the project
+can also be looked up,
+e.g. finding the number of recruiters per company.
+
+\subsection{Discrepancies between final and turned in schema}
+
+Internship and full time changed to postings.
+Added interview relation in order to implement ISA relationship.
+Renamed a few relations, but functionally the same.
+We change the implementation of the ISA relationship for \texttt{Posting} (internship or full time). 
+We implement it by adding an attribute called \texttt{PostingType} to \texttt{Posting} 
+so it's easier and more efficient to get data from the 
+\texttt{JobApplication} and \texttt{Posting} relationship. 
+The other minor changes are name change from \texttt{Application} to 
+\texttt{JobApplication}, and 
+\texttt{InformationSessionHosting} to \texttt{InformationSession} for clarity purposes.
