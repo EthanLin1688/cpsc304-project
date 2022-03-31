@@ -1,4 +1,5 @@
 -- Clear database before running.
+-- Source: https://stackoverflow.com/questions/31890032/how-to-delete-all-data-in-oracle-database-with-sql
 
 BEGIN
    FOR cur_rec IN (SELECT object_name, object_type
@@ -62,7 +63,7 @@ CREATE TABLE Applicant (
 );
 
 CREATE TABLE JobApplication (
-  JobApplicationID      int,
+  JobApplicationID   int,
   CoverLetterLink    varchar(100),
   ResumeLink         varchar(100),
   Decision           varchar(20),
@@ -79,7 +80,7 @@ CREATE TABLE Posting (
   Salary             int,
   StartDate          date,
   JobDescription     varchar(1000),
-  PostingLocation           varchar(100),
+  PostingLocation    varchar(100),
   CompanyName        varchar(100) NOT NULL,
   CONSTRAINT posting_pk PRIMARY KEY (PostingID)
 );
