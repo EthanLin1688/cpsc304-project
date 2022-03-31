@@ -23,6 +23,13 @@
 
     <body>
         <h1> CPSC 304 Job Board Database Demo </h1>
+		<div>
+
+        <h2>Result:</h2>
+		<?php
+		handle();
+		?>
+		<hr/>
 
         <h2>Insertion</h2>
         <p>Insert a new posting</p>
@@ -37,7 +44,9 @@
             Company Name: <input type="text" name="insertCompanyName"> <br /><br />
             <input type="submit" value="Insert" name="insertSubmit"></p>
         </form>
+
         <hr />
+		</div>
 
         <h2>Deletion</h2>
         <p> Remove a company from the database </p>
@@ -218,17 +227,38 @@
             OCILogoff($db_conn);
         }
 
-        #function handleUpdateRequest() {
-        #    global $db_conn;
 
-        #    $old_name = $_POST['oldName'];
-        #    $new_name = $_POST['newName'];
+		// QUERY FUNCTIONS
 
-        #    // you need the wrap the old name and new name values with single quotations
-        #    executePlainSQL("UPDATE demoTable SET name='" . $new_name . "' WHERE name='" . $old_name . "'");
-        #    OCICommit($db_conn);
-        #}
-        
+		function printInsertRequestResult() {
+            $result = executePlainSQL("SELECT * FROM Posting");
+            echo "<br>Retrieved data from Posting table:<br>";
+            echo "<table>";
+            echo "
+				<tr>
+					<th>Posting ID</th>
+					<th>Posting Type</th>
+					<th>Salary</th>
+					<th>Start Date</th>
+					<th>Job Description</th>
+					<th>Posting Location</th>
+					<th>Company Name</th>
+				</tr>";
+
+            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+                echo "<tr>" . 
+						"<td>" . $row[0] . "</td>" . 
+						"<td>" . $row[1] . "</td>" . 
+						"<td>" . $row[2] . "</td>" . 
+						"<td>" . $row[3] . "</td>" . 
+						"<td>" . $row[4] . "</td>" . 
+						"<td>" . $row[5] . "</td>" . 
+						"<td>" . $row[6] . "</td>" . 
+					"<tr>";
+            }
+            echo "</table>";
+		}
+
         function handleInsertRequest() {
             global $db_conn;
 
@@ -245,6 +275,9 @@
             $alltuples = array (
                 $tuple
             );
+
+			echo "<br>POSTING BEFORE INSERT:</br>";
+			printInsertRequestResult();
 
             executeBoundSQL("
 				INSERT INTO Posting (
@@ -267,46 +300,13 @@
 				", 
 			$alltuples);
             
-            $result = executePlainSQL("SELECT * FROM Posting");
-
-            echo "<br>Retrieved data from Posting table:<br>";
-            echo "<table>";
-            echo "<tr><th>Posting ID</th><th>Posting Type</th><th>Salary</th><th>Start Date</th><th>Job Description</th><th>Posting Location</th><th>Company Name</th></tr>";
-
-            while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-                echo "<tr>" . 
-						"<td>" . $row[0] . "</td>" . 
-						"<td>" . $row[1] . "</td>" . 
-						"<td>" . $row[2] . "</td>" . 
-						"<td>" . $row[3] . "</td>" . 
-						"<td>" . $row[4] . "</td>" . 
-						"<td>" . $row[5] . "</td>" . 
-						"<td>" . $row[6] . "</td>" . 
-					"<tr>";
-            }
-
-            echo "</table>";
+			echo "<br>POSTING AFTER INSERT:</br>";
+			printInsertRequestResult();
             
             OCICommit($db_conn);
         }
 
-		function handleDeleteRequest() {
-            global $db_conn;
-
-            $tuple = array (
-                ":company_name" => $_POST['deleteCompanyName'],
-            );
-
-            $alltuples = array (
-                $tuple
-            );
-
-			executeBoundSQL("
-				DELETE 
-				FROM Company C
-				WHERE C.CompanyName = :company_name
-			", $alltuples);
-
+		function printDeleteRequestResult() {
             $result = executePlainSQL("SELECT * FROM Company");
 
             echo "<br>Retrieved data from Company table:<br>";
@@ -334,35 +334,35 @@
             }
 
             echo "</table>";
-            
-            OCICommit($db_conn);
 		}
 
-		function handleUpdateRequest() {
+		function handleDeleteRequest() {
             global $db_conn;
 
             $tuple = array (
-                ":first_name" => $_POST['updateFirstName'],
-                ":last_name" => $_POST['updateLastName'],
-                ":company_name" => $_POST['updateCompanyName'],
+                ":company_name" => $_POST['deleteCompanyName'],
             );
 
             $alltuples = array (
                 $tuple
             );
 
+			echo "<br>BEFORE DELETE REQUEST: </br>";
+			printDeleteRequestResult();
+
 			executeBoundSQL("
-				UPDATE JobApplication J
-				SET J.Decision = 'Rejected'
-				WHERE J.CompanyName = :company_name
-				  	AND J.ApplicantID IN (
-						SELECT A.ApplicantID 
-						FROM Applicant A
-						WHERE A.FirstName = :first_name
-							  AND A.LastName = :last_name
-				)
+				DELETE 
+				FROM Company C
+				WHERE C.CompanyName = :company_name
 			", $alltuples);
 
+			echo "<br>AFTER DELETE REQUEST: </br>";
+			printDeleteRequestResult();
+            
+            OCICommit($db_conn);
+		}
+
+		function printUpdateRequestResult() {
             $result = executePlainSQL("
 				SELECT A.FirstName, A.LastName, J.CompanyName, J.Decision
 				FROM JobApplication J, Applicant A
@@ -391,6 +391,38 @@
             }
 
             echo "</table>";
+		}
+
+		function handleUpdateRequest() {
+            global $db_conn;
+
+            $tuple = array (
+                ":first_name" => $_POST['updateFirstName'],
+                ":last_name" => $_POST['updateLastName'],
+                ":company_name" => $_POST['updateCompanyName'],
+            );
+
+            $alltuples = array (
+                $tuple
+            );
+
+			echo "<br>RESULT BEFORE UPDATE:</br>";
+			printUpdateRequestResult();
+
+			executeBoundSQL("
+				UPDATE JobApplication J
+				SET J.Decision = 'Rejected'
+				WHERE J.CompanyName = :company_name
+				  	AND J.ApplicantID IN (
+						SELECT A.ApplicantID 
+						FROM Applicant A
+						WHERE A.FirstName = :first_name
+							  AND A.LastName = :last_name
+				)
+			", $alltuples);
+
+			echo "<br>RESULT AFTER UPDATE:</br>";
+			printUpdateRequestResult();
             
             OCICommit($db_conn);
 		}
@@ -459,14 +491,15 @@
 		function handleJoinRequest() {
             global $db_conn;
 
-			$result = executePlainSQL("
+			$query = "
 				SELECT A.FirstName, A.LastName
 				FROM Applicant A, JobApplication J, Posting P
 				WHERE A.ApplicantID = J.ApplicantID 
 					AND J.PostingID = P.PostingID
 					AND P.PostingLocation = '" . $_GET['joinLocation'] . "'
-					AND J.Decision = 'Accepted'
-			");
+					AND J.Decision = 'Accepted'";
+
+			$result = executePlainSQL($query);
 
             echo "<br>Retrieved data from Join:<br>";
             echo "<table>";
@@ -647,21 +680,23 @@
             }
         }
 
-		if (isset($_POST['deleteSubmit']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
-            handlePOSTRequest();
-        } else if (isset($_GET['selectionQueryRequest'])) {
-            handleGETRequest();
-        } else if (isset($_GET['projectionQueryRequest'])) {
-            handleGETRequest();
-        } else if (isset($_GET['joinQueryRequest'])) {
-            handleGETRequest();
-        } else if (isset($_GET['aggregationCountRequest'])) {
-            handleGETRequest();
-        } else if (isset($_GET['nestedAggregationRequest'])) {
-            handleGETRequest();
-        } else if (isset($_GET['divisionQueryRequest'])) {
-            handleGETRequest();
-        } 
+		function handle() {
+			if (isset($_POST['deleteSubmit']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
+				handlePOSTRequest();
+			} else if (isset($_GET['selectionQueryRequest'])) {
+				handleGETRequest();
+			} else if (isset($_GET['projectionQueryRequest'])) {
+				handleGETRequest();
+			} else if (isset($_GET['joinQueryRequest'])) {
+				handleGETRequest();
+			} else if (isset($_GET['aggregationCountRequest'])) {
+				handleGETRequest();
+			} else if (isset($_GET['nestedAggregationRequest'])) {
+				handleGETRequest();
+			} else if (isset($_GET['divisionQueryRequest'])) {
+				handleGETRequest();
+			} 
+		}
         
 		?>
 	</body>
